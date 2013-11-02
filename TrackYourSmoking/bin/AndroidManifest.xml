@@ -25,5 +25,4 @@
         <activity android:name="com.example.trackyoursmoking.UserSettingActivity"></activity>
         <activity android:name="com.example.trackyoursmoking.InitialUserDataActivity"></activity>
     </application>
-
 </manifest>
