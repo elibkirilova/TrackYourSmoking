@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/pricingPerPackTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@+id/pricePerPackEditText"
+        android:text="@string/price_per_pack" />
+
+    <TextView
+        android:id="@+id/cigPerPackTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/pricingPerPackTextView"
+        android:layout_alignRight="@+id/pricingPerPackTextView"
+        android:layout_below="@+id/pricingPerPackTextView"
+        android:layout_marginTop="19dp"
+        android:text="@string/cigarettens_in_pack" />
+
+    <EditText
+        android:id="@+id/cigPerPackEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/cigPerPackTextView"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:textColorHint="@color/inline_errors"
+        android:inputType="numberSigned" />
+
+    <EditText
+        android:id="@+id/pricePerPackEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/pricingPerPackTextView"
+        android:layout_alignLeft="@+id/cigPerPackEditText"
+        android:ems="10"
+        android:textColorHint="@color/inline_errors"
+        android:inputType="numberDecimal" >
+
+       
+    </EditText>
+
+</RelativeLayout>

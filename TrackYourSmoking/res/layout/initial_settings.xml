@@ -1,0 +1,128 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <SeekBar
+        android:id="@+id/minCigPerDaySeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="54dp" />
+
+    <TextView
+        android:id="@+id/minCigPerDayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/minCigPerDaySeekBar"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="24dp"
+        android:text="@string/min_cigarettens_per_day_text_view" />
+
+    <TextView
+        android:id="@+id/MinCigPerDayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/minCigPerDayTextView"
+        android:layout_alignBottom="@+id/maxCigPerDayTextView"
+        android:layout_marginLeft="27dp"
+        android:layout_toRightOf="@+id/minCigPerDayTextView" />
+
+    <TextView
+        android:id="@+id/maxCigPerDayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/minCigPerDaySeekBar"
+        android:layout_below="@+id/minCigPerDaySeekBar"
+        android:layout_marginTop="14dp"
+        android:text="@string/max_cigarettens_per_day_text_view" />
+
+    <TextView
+        android:id="@+id/MaxCigPerDayValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/maxCigPerDayTextView"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/maxCigPerDayTextView" />
+
+    <SeekBar
+        android:id="@+id/maxCigPerDaySeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/maxCigPerDayTextView"
+        android:layout_marginTop="16dp" />
+
+  <RadioGroup
+      android:id="@+id/pricingRadioGroup"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignLeft="@+id/maxCigPerDaySeekBar"
+      android:layout_centerVertical="true"
+      android:orientation="horizontal" >
+
+      <RadioButton
+          android:id="@+id/perPackRadio"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:checked="true"
+          android:text="@string/radio_per_pack" />
+      
+      <RadioButton
+	      android:id="@+id/perCigaretteRadio"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:text="@string/radio_per_cigarette" />
+  </RadioGroup>
+
+  <TextView
+      android:id="@+id/pricingTitleTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/pricingRadioGroup"
+      android:layout_alignParentLeft="true"
+      android:text="@string/pricing_title" />
+
+  <RelativeLayout
+      android:id="@+id/pricingFragmentLayout"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignLeft="@+id/pricingRadioGroup"
+      android:layout_below="@+id/pricingRadioGroup"
+      android:layout_marginTop="16dp" >
+  </RelativeLayout>
+
+  <Button
+      android:id="@+id/saveSettingsButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentLeft="true"
+      android:layout_alignRight="@+id/maxCigPerDaySeekBar"
+      android:text="@string/save_settings" />
+
+  <TextView
+      android:id="@+id/monthMoneyLimitTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/pricingTitleTextView"
+      android:layout_alignParentLeft="true"
+      android:text="@string/month_money_limit" />
+
+  <EditText
+      android:id="@+id/cigPerPackEditText"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignBottom="@+id/monthMoneyLimitTextView"
+      android:layout_toRightOf="@+id/MinCigPerDayValue"
+      android:ems="5"
+      android:textColorHint="@color/inline_errors"
+      android:inputType="numberDecimal" />
+
+</RelativeLayout>

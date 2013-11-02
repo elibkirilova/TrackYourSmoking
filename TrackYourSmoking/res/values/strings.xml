@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Track Your Smoking</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="min_cigarettens_per_day_text_view">Min cigarettens per day</string>
+    <string name="max_cigarettens_per_day_text_view">Max cigarettens per day</string>
+    
+    <string name="pricing_title">Pricing</string>
+    
+    <string name="radio_per_pack">Per pack</string>
+    <string name="radio_per_cigarette">Per cigarette</string>
+    
+    <string name="price_per_pack">Price per pack</string>
+    <string name="cigarettens_in_pack">Count of cigarettens in one pack</string>
+
+    <string name="price_per_cigarette">Price per cigarette</string>
+    
+    <string name="month_money_limit">Month money limit</string>
+    <string name="pref_month_money_limit_summary">Set your month money limit</string>
+    
+    <string name="save_settings">Save Settings</string>
+</resources>
