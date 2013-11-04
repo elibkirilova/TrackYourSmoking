@@ -1,19 +1,32 @@
 package com.example.trackyoursmoking;
 
 
-import gif.decoder.GifRun;
+import java.io.IOException;
+import java.io.InputStream;
+
+import com.example.trackyoursmoking.gifview.GifMovieView;
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import android.content.Intent;
 
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity  {
 	
 	private  IRepository repository;
 	
@@ -31,7 +44,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
         InitialUserData userData = repository.getInitialData();
-       // userData = new InitialUserData();
+        userData = new InitialUserData();
         
         if(userData == null){
         	 
@@ -43,11 +56,38 @@ public class MainActivity extends Activity {
         TextView test = (TextView)findViewById(R.id.TestTextView);
         test.setText(userData.toString());
         
-        SurfaceView v = (SurfaceView) findViewById(R.id.imgSmokingProgressSurfaceView);
-        GifRun w = new  GifRun();
-		w.LoadGiff(v, this, R.drawable.smoke_under_the_minimum);
+        //SurfaceView v = (SurfaceView) findViewById(R.id.imgSmokingProgressSurfaceView);
+        //GifRun w = new  GifRun();
+		//w.LoadGiff(v, this, R.drawable.smoke_under_the_minimum);
+        
+    
+                // Inflate the layout for this fragment
+            	// InputStream stream = null;
+                // try {
+                //     stream = getAssets().open("smoke_under_the_minimum.gif");
+                // } catch (IOException e) {
+                 //    e.printStackTrace();
+                // }
+                 
+               //GifMovieView view = new GifMovieView(this, stream);
+
+//        GifDecoderView view = new GifDecoderView(this, stream);
+        //GifWebView view = new GifWebView(this, "file:///android_asset/piggy.gif");                 
+               FragmentManager fragmentManager = getSupportFragmentManager();
+      	        
+       	       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+       	 
+       	       Fragment pricingFragment = new GifFragment();
+       	         
+       	       fragmentTransaction.replace(R.id.gifFragmentLayout, pricingFragment);
+       	      
+       	       fragmentTransaction.commit();
+      
+     
+        //setContentView(view);
     }
 
+	
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

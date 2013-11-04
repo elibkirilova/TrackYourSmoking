@@ -18,13 +18,13 @@
         android:layout_marginTop="22dp"
         android:text="TextView" />
 
-    <SurfaceView
-        android:id="@+id/imgSmokingProgressSurfaceView"
+    <fragment
+        android:id="@+id/gifFragmentLayout"
+        android:name="com.example.trackyoursmoking.GifFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/TestTextView"
         android:layout_below="@+id/TestTextView"
-        android:layout_marginTop="26dp" />
+        android:layout_marginTop="44dp" />
 
 </RelativeLayout>
