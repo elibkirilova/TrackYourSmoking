@@ -21,4 +21,6 @@
     <string name="pref_month_money_limit_summary">Set your month money limit</string>
     
     <string name="save_settings">Save Settings</string>
+    
+    <string name="add_cigarette">Smoke Another One</string>
 </resources>

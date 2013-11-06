@@ -6,7 +6,8 @@
         <EditTextPreference
                 android:title="@string/month_money_limit"
                 android:summary="@string/pref_month_money_limit_summary"
-                android:key="prefUsername"/>
+                android:key="prefUsername"
+                android:inputType="numberDecimal"/>
     </PreferenceCategory>
      
     <PreferenceCategory android:title="@string/month_money_limit" >

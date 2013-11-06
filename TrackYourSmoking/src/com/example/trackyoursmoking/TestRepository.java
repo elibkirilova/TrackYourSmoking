@@ -3,14 +3,14 @@ package com.example.trackyoursmoking;
 public class TestRepository implements IRepository {
 
 	private static InitialUserData initialData;
-	private int ciggaretesSomokedToday;
+	private static int ciggaretesSomokedToday;
 	
 	public int getCigarettesSmokedToday() {
-		return this.ciggaretesSomokedToday;
+		return ciggaretesSomokedToday;
 	}
 
 	public int addCigaretteToday() {
-		return this.ciggaretesSomokedToday++;
+		return ciggaretesSomokedToday++;
 	}
 
 	

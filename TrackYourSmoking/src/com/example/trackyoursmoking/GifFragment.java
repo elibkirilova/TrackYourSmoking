@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import com.example.trackyoursmoking.gifview.GifMovieView;
+import com.example.trackyoursmoking.gifview.GifView;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -17,17 +18,9 @@ public class GifFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState) {
     	
-    	InputStream stream = null;
-        try {
-            stream = getActivity().getAssets().open("smoke_under_the_minimum.gif");
-           
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        
-      GifMovieView view = new GifMovieView(getActivity(), stream);
+    	  GifView gif_view = new GifView(inflater.getContext());
+          gif_view.setGifImageResourceID(R.drawable.animsmoke);
     	
-    	return view;
+    	return gif_view;
     }
 }
