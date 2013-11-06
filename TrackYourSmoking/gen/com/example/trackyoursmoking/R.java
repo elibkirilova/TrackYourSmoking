@@ -30,36 +30,41 @@ public final class R {
     public static final class id {
         public static final int MaxCigPerDayValue=0x7f0a0009;
         public static final int MinCigPerDayValue=0x7f0a0007;
-        public static final int PricePerCigaretteTextView=0x7f0a0013;
-        public static final int action_settings=0x7f0a0018;
+        public static final int PricePerCigaretteTextView=0x7f0a0017;
+        public static final int action_settings=0x7f0a001c;
         public static final int addCigaretteButton=0x7f0a0002;
         public static final int cigPerPackEditText=0x7f0a0012;
-        public static final int cigPerPackTextView=0x7f0a0017;
+        public static final int cigPerPackTextView=0x7f0a001b;
         public static final int dailyDataTextView=0x7f0a0001;
         public static final int fragment_container=0x7f0a0004;
         public static final int gifFragmentLayout=0x7f0a0000;
         public static final int initialDataTextView=0x7f0a0003;
+        public static final int maxCigPerDayNumberPicker=0x7f0a0013;
         public static final int maxCigPerDaySeekBar=0x7f0a000a;
         public static final int maxCigPerDayTextView=0x7f0a0008;
         public static final int minCigPerDaySeekBar=0x7f0a0005;
         public static final int minCigPerDayTextView=0x7f0a0006;
+        public static final int minGigPerDayNumberPicker=0x7f0a0014;
         public static final int monthMoneyLimitTextView=0x7f0a0011;
         public static final int perCigaretteRadio=0x7f0a000d;
         public static final int perPackRadio=0x7f0a000c;
-        public static final int pricePerCigaretteEditText=0x7f0a0014;
-        public static final int pricePerPackEditText=0x7f0a0016;
+        public static final int pricePerCigaretteEditText=0x7f0a0018;
+        public static final int pricePerPackEditText=0x7f0a001a;
         public static final int pricingFragmentLayout=0x7f0a000f;
-        public static final int pricingPerPackTextView=0x7f0a0015;
+        public static final int pricingPerPackTextView=0x7f0a0019;
         public static final int pricingRadioGroup=0x7f0a000b;
         public static final int pricingTitleTextView=0x7f0a000e;
         public static final int saveSettingsButton=0x7f0a0010;
+        public static final int textView1=0x7f0a0016;
+        public static final int textView2=0x7f0a0015;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int gif_container=0x7f030001;
         public static final int initial_settings=0x7f030002;
-        public static final int pricing_per_cigarette=0x7f030003;
-        public static final int pricing_per_pack=0x7f030004;
+        public static final int numberpicker_dialog=0x7f030003;
+        public static final int pricing_per_cigarette=0x7f030004;
+        public static final int pricing_per_pack=0x7f030005;
     }
     public static final class menu {
         public static final int main=0x7f090000;
@@ -72,6 +77,7 @@ public final class R {
         public static final int max_cigarettens_per_day_text_view=0x7f070003;
         public static final int min_cigarettens_per_day_text_view=0x7f070002;
         public static final int month_money_limit=0x7f07000a;
+        public static final int pref_category_cig_count_levels_title=0x7f07000e;
         public static final int pref_month_money_limit_summary=0x7f07000b;
         public static final int price_per_cigarette=0x7f070009;
         public static final int price_per_pack=0x7f070007;

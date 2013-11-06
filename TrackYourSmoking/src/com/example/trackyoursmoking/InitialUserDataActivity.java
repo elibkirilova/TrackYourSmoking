@@ -1,26 +1,16 @@
 package com.example.trackyoursmoking;
 
-import java.io.FileOutputStream;
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -333,11 +323,36 @@ public class InitialUserDataActivity extends Activity {
 			 }
 			 else{
 				 Intent theIndent = new Intent(getApplication(), MainActivity.class);
-				 repository.setInitialData(userSettings);
+				 this.setInitialData(userSettings);
 				 startActivity(theIndent);
 				 
 			 }
+			 
 		}
+		
+		private void setInitialData(InitialUserData initialData) {
+
+					SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
+					SharedPreferences.Editor editor = sharedPrefs.edit();
+					
+					editor.putBoolean("has_initial_data", true);
+
+					editor.putInt("max_cigarettes_per_day", initialData.getMaxCigarettensPerDay());
+					editor.putInt("min_cigarettes_per_day", initialData.getMinCigarettensPerDay());
+					if(initialData.getMonthMoneyLimit() != null)
+					{
+						editor.putLong("month_money_limit", Double.doubleToLongBits((Double) initialData.getMonthMoneyLimit()));
+					}
+					editor.putLong("price_per_cigarette", Double.doubleToLongBits((Double) initialData.getPricePerCigarette()));
+						if(initialData.getPackOfCigarettens() != null){
+							editor.putBoolean("pricing_on_pack", true);
+							editor.putInt("count_in_pack", initialData.getPackOfCigarettens().getCountOfCigarettes());
+							editor.putLong("pack_price", Double.doubleToLongBits((Double) initialData.getPackOfCigarettens().getPrice()));
+						}
+						
+						editor.commit();
+								
+				}
 		
 		
 }

@@ -23,4 +23,7 @@
     <string name="save_settings">Save Settings</string>
     
     <string name="add_cigarette">Smoke Another One</string>
+    
+    <string name="pref_category_cig_count_levels_title">Cigarettes count levels</string>
+    
 </resources>

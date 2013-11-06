@@ -58,7 +58,7 @@ public class MainActivity extends FragmentActivity  {
         
         
         InitialUserData userData = this.getInitialData();
-        //userData = new InitialUserData();
+        
         
         if(userData == null){
         	 
@@ -182,7 +182,6 @@ public class MainActivity extends FragmentActivity  {
 			InitialUserData initialData = new InitialUserData();
 			
 			SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
-			StringBuilder builder = new StringBuilder();
 			
 			boolean hasInitialData = sharedPrefs.getBoolean("has_initial_data", false);
 			
@@ -190,13 +189,15 @@ public class MainActivity extends FragmentActivity  {
 				
 				initialData.setMaxCigarettensPerDay(sharedPrefs.getInt("max_cigarettes_per_day", 0));
 				initialData.setMinCigarettensPerDay(sharedPrefs.getInt("min_cigarettes_per_day", 0));
-				Double moneyLimit = Double.longBitsToDouble(sharedPrefs.getLong("month_money_limit", Double.doubleToLongBits((Double) null)));
-				initialData.setPricePerCigarette(sharedPrefs.getLong("price_per_cigarette", Double.doubleToLongBits((Double) null)));
-				initialData.setMonthMoneyLimit(moneyLimit);
-					if(sharedPrefs.getBoolean("pricing_on_pack", true)){
+				initialData.setPricePerCigarette(Double.longBitsToDouble(sharedPrefs.getLong("price_per_cigarette", 5)));
+				Long moneyLimit = sharedPrefs.getLong("month_money_limit", -1);
+				if(moneyLimit != -1){
+					initialData.setMonthMoneyLimit(Double.longBitsToDouble(moneyLimit));
+				}
+					if(sharedPrefs.getBoolean("pricing_on_pack", false)){
 						PackOfCigarettens pack = new PackOfCigarettens();
-						pack.setCountOfCigarettes(sharedPrefs.getInt("count_in_pack", 0));
-						pack.setPrice(Double.longBitsToDouble(sharedPrefs.getLong("pack_price", Double.doubleToLongBits((Double) null))));
+						pack.setCountOfCigarettes(sharedPrefs.getInt("count_in_pack", 5));
+						pack.setPrice(Double.longBitsToDouble(sharedPrefs.getLong("pack_price", 5)));
 					}
 					return initialData;
 				}			

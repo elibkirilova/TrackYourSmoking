@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.NumberPicker;
 import android.app.Activity;
 import android.app.Fragment;
  
@@ -16,9 +18,9 @@ public class UserSettingActivity extends PreferenceActivity   {
       //  setContentView(R.layout.settings);
        // addPreferencesFromResource(R.xml.settings);
         
-        
-
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.settings);
     }
+    
+    
 }
