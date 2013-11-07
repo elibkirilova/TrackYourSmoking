@@ -18,6 +18,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
 
 
 import android.support.v4.app.Fragment;
@@ -33,6 +34,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -49,7 +51,7 @@ public class MainActivity extends FragmentActivity  {
 	}
 	
 	Button addCigaretteButton;
-	
+	AnimationDrawable frameAnimation;
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,52 +89,49 @@ public class MainActivity extends FragmentActivity  {
         TextView initialDataTextView = (TextView)findViewById(R.id.initialDataTextView);
         initialDataTextView.setText(userData.toString());
         
-        InputStream stream = null;
-        try {
-           stream = getAssets().open("smoke_under_the_minimum.gif");
-            //stream = getPicture(R.drawable.smoke_under_the_minimum);
-           
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        
-        GifMovieView view = new GifMovieView(this, stream);
-        //SurfaceView v = (SurfaceView) findViewById(R.id.imgSmokingProgressSurfaceView);
-        //GifRun w = new  GifRun();
-		//w.LoadGiff(v, this, R.drawable.smoke_under_the_minimum);
-        
-    
-                // Inflate the layout for this fragment
-            	// InputStream stream = null;
-                // try {
-                //     stream = getAssets().open("smoke_under_the_minimum.gif");
-                // } catch (IOException e) {
-                 //    e.printStackTrace();
-                // }
-                 
-               //GifMovieView view = new GifMovieView(this, stream);
+        //ImageView img = (ImageView)findViewById(R.id.imageView1);
+       //// img.setBackgroundResource(R.drawable.animation);
 
-//        GifDecoderView view = new GifDecoderView(this, stream);
-        //GifWebView view = new GifWebView(this, "file:///android_asset/piggy.gif");                 
-               FragmentManager fragmentManager = getSupportFragmentManager();
-      	        
-       	       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-       	 
-       	       Fragment pricingFragment = new GifFragment();
-       	         
-       	       fragmentTransaction.replace(R.id.gifFragmentLayout, pricingFragment);
-       	      
-       	       fragmentTransaction.commit();
-      
-     
-        //setContentView(view);
+        // Get the background, which has been compiled to an AnimationDrawable object.
+      // frameAnimation = (AnimationDrawable) img.getBackground();
+//
+//        // Start the animation (looped playback by default).
+//        frameAnimation.start();
+        
+//        img.post(new Runnable() {
+//            public void run() {
+//                AnimationDrawable anim = (AnimationDrawable) img.getBackground();
+//                anim.start();
+//            }
+//        });
        
-      
-        //setContentView(gif_view);
-    }
+       frameAnimation = new AnimationDrawable();
+       frameAnimation.addFrame(getResources().getDrawable
+       (R.drawable.no_smoke1), 200);
+       frameAnimation.addFrame(getResources().getDrawable
+       (R.drawable.no_smoke2), 200);
+       frameAnimation.addFrame(getResources().getDrawable
+       (R.drawable.no_smoke3), 200);
+       frameAnimation.setOneShot(false);
 
-	
+       ImageView imageAnim = (ImageView) findViewById(R.id.imageView1);
+       imageAnim.setBackgroundDrawable(frameAnimation);
+
+       imageAnim.post(new Starter());
+    }
+	class Starter implements Runnable {
+
+		public void run() {
+			frameAnimation.start();
+		}
+
+		}
+		
+	@Override
+    public void onWindowFocusChanged(boolean hasFocus) {        
+        super.onWindowFocusChanged(hasFocus);
+        frameAnimation.start();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

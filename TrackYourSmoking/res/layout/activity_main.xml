@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"  android:hardwareAccelerated="false">
 
-  <fragment
+ <fragment
       android:id="@+id/gifFragmentLayout"
       android:name="com.example.trackyoursmoking.GifFragment"
       android:layout_width="wrap_content"
@@ -16,6 +16,8 @@
       android:layout_alignParentLeft="true"
       android:layout_below="@+id/dailyDataTextView"
       android:layout_marginTop="44dp" />
+      
+   
 
   <Button
       android:id="@+id/addCigaretteButton"
@@ -41,5 +43,13 @@
       android:layout_alignLeft="@+id/gifFragmentLayout"
       android:layout_below="@+id/gifFragmentLayout"
       android:layout_marginTop="89dp"/>
+
+  <ImageView
+      android:id="@+id/imageView1"
+     android:layout_width="154px"
+android:layout_height="217px"
+      android:layout_centerVertical="true"
+      android:layout_toRightOf="@+id/initialDataTextView"
+      android:src="@drawable/animation" />
  
 </RelativeLayout>
