@@ -1,16 +1,7 @@
 package com.example.trackyoursmoking;
 
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.InvalidParameterException;
-
-import com.example.trackyoursmoking.gifview.GifMovieView;
-import com.example.trackyoursmoking.gifview.GifView;
-
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,22 +11,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 
-
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity  {
@@ -56,9 +39,7 @@ public class MainActivity extends FragmentActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        
-        
+
         InitialUserData userData = this.getInitialData();
         
         
@@ -81,57 +62,37 @@ public class MainActivity extends FragmentActivity  {
 
         });
        
+
         TextView dailyDataTextView = (TextView)findViewById(R.id.dailyDataTextView);
         dailyDataTextView.setText("Today: "+ repository.getCigarettesSmokedToday());
-        
-       
-        
-        TextView initialDataTextView = (TextView)findViewById(R.id.initialDataTextView);
-        initialDataTextView.setText(userData.toString());
-        
-        //ImageView img = (ImageView)findViewById(R.id.imageView1);
-       //// img.setBackgroundResource(R.drawable.animation);
 
-        // Get the background, which has been compiled to an AnimationDrawable object.
-      // frameAnimation = (AnimationDrawable) img.getBackground();
-//
-//        // Start the animation (looped playback by default).
-//        frameAnimation.start();
+        //TextView initialDataTextView = (TextView)findViewById(R.id.initialDataTextView);
+        //initialDataTextView.setText(userData.toString());
         
-//        img.post(new Runnable() {
-//            public void run() {
-//                AnimationDrawable anim = (AnimationDrawable) img.getBackground();
-//                anim.start();
-//            }
-//        });
-       
-       frameAnimation = new AnimationDrawable();
-       frameAnimation.addFrame(getResources().getDrawable
-       (R.drawable.no_smoke1), 200);
-       frameAnimation.addFrame(getResources().getDrawable
-       (R.drawable.no_smoke2), 200);
-       frameAnimation.addFrame(getResources().getDrawable
-       (R.drawable.no_smoke3), 200);
-       frameAnimation.setOneShot(false);
+        ImageView img = (ImageView)findViewById(R.id.imageView1);
+        img.setBackgroundResource(R.drawable.animation_no_smoking);
 
-       ImageView imageAnim = (ImageView) findViewById(R.id.imageView1);
-       imageAnim.setBackgroundDrawable(frameAnimation);
-
-       imageAnim.post(new Starter());
+        frameAnimation = (AnimationDrawable) img.getBackground();
+        
+        frameAnimation.start();
+ 
     }
-	class Starter implements Runnable {
-
-		public void run() {
-			frameAnimation.start();
-		}
-
-		}
-		
+	
+	
 	@Override
     public void onWindowFocusChanged(boolean hasFocus) {        
         super.onWindowFocusChanged(hasFocus);
-        frameAnimation.start();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//  
+//        GifFragment pricingFragment = new GifFragment();
+//          
+//        fragmentTransaction.replace(R.id.gifFragmentLayout, pricingFragment);
+//          
+//        fragmentTransaction.commit();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -186,17 +147,18 @@ public class MainActivity extends FragmentActivity  {
 			
 			if(hasInitialData){
 				
-				initialData.setMaxCigarettensPerDay(sharedPrefs.getInt("max_cigarettes_per_day", 0));
-				initialData.setMinCigarettensPerDay(sharedPrefs.getInt("min_cigarettes_per_day", 0));
-				initialData.setPricePerCigarette(Double.longBitsToDouble(sharedPrefs.getLong("price_per_cigarette", 5)));
-				Long moneyLimit = sharedPrefs.getLong("month_money_limit", -1);
-				if(moneyLimit != -1){
-					initialData.setMonthMoneyLimit(Double.longBitsToDouble(moneyLimit));
-				}
+					initialData.setMaxCigarettensPerDay(sharedPrefs.getInt("max_cigarettes_per_day", 0));
+					initialData.setMinCigarettensPerDay(sharedPrefs.getInt("min_cigarettes_per_day", 0));
+					initialData.setPricePerCigarette(Double.longBitsToDouble(sharedPrefs.getLong("price_per_cigarette", 5)));
+					Long moneyLimit = sharedPrefs.getLong("month_money_limit", -1);
+					if(moneyLimit != -1){
+						initialData.setMonthMoneyLimit(Double.longBitsToDouble(moneyLimit));
+					}
 					if(sharedPrefs.getBoolean("pricing_on_pack", false)){
 						PackOfCigarettens pack = new PackOfCigarettens();
 						pack.setCountOfCigarettes(sharedPrefs.getInt("count_in_pack", 5));
 						pack.setPrice(Double.longBitsToDouble(sharedPrefs.getLong("pack_price", 5)));
+						initialData.setPackOfCigarettens(pack);
 					}
 					return initialData;
 				}			

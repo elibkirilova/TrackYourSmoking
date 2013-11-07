@@ -35,7 +35,9 @@ public class InitialUserDataActivity extends Activity {
 			this.repository = repository;
 		}
 	
-	  private static final int MIN_CIG_PER_DAY = 1;
+		private static final String NEW_LINE = System.getProperty("line.separator");
+		
+		private static final int MIN_CIG_PER_DAY = 1;
 		private static final int MAX_CIG_PER_DAY = 100;
 		private static final int DEFAULT_MIN_CIG_PER_DAY = 5;
 		private static final int DEFAULT_MAX_CIG_PER_DAY = 20;
@@ -219,6 +221,8 @@ public class InitialUserDataActivity extends Activity {
 		private void saveInitialSettings(){
 			
 			
+			boolean isValid = true;
+			
 			StringBuilder errors = new StringBuilder();
 			
 			InitialUserData userSettings = new InitialUserData();
@@ -234,7 +238,8 @@ public class InitialUserDataActivity extends Activity {
 				}
 				catch(InvalidParameterException ex){
 					errors.append(ex.getMessage());
-					errors.append(System.getProperty("line.separator"));
+					errors.append(NEW_LINE);
+					isValid = false;
 				}
 				
 			}
@@ -252,12 +257,13 @@ public class InitialUserDataActivity extends Activity {
 						}
 						catch(InvalidParameterException ex){
 							errors.append(ex.getMessage());
-							errors.append(System.getProperty("line.separator"));
+							errors.append(NEW_LINE);
+							isValid = false;
 						}
 					}
 					else{
 						cigPerPackEditText.setHint("(required)");
-						return;
+						isValid = false;
 					}
 				 EditText pricePerPackEditText = (EditText) findViewById(R.id.pricePerPackEditText);
 				 String pricePerPack = pricePerPackEditText.getText().toString().trim();
@@ -269,11 +275,12 @@ public class InitialUserDataActivity extends Activity {
 						catch(InvalidParameterException ex){
 							errors.append(ex.getMessage());
 							errors.append(System.getProperty("line.separator"));
+							isValid = false;
 						}
 					}
 					else{
 						pricePerPackEditText.setHint("(required)");
-						return;
+						isValid = false;
 					}
 					userSettings.setPackOfCigarettens(pack);
              }
@@ -287,13 +294,14 @@ public class InitialUserDataActivity extends Activity {
 						}
 						catch(InvalidParameterException ex){
 							errors.append(ex.getMessage());
-							errors.append(System.getProperty("line.separator"));
+							errors.append(NEW_LINE);
+							isValid = false;
 						}
 						
 					}
 					else{
 						pricePerCigaretteEditText.setHint("(required)");
-						return;
+						isValid = false;
 					}
              }
              else{
@@ -309,18 +317,20 @@ public class InitialUserDataActivity extends Activity {
             	 return;
              }
 			 
-			 if(errors.length() != 0){
-				 new AlertDialog.Builder(this)
-				 	.setTitle("Errors in the input")
-	         	    .setMessage(errors.toString())
-	         	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-	         	        public void onClick(DialogInterface dialog, int which) { 
-	         	            // continue with delete
-	         	        }
-	         	     })
-	         	     .show();
-				 
+			 if(!isValid){
+				 if(errors.length() != 0){
+					 new AlertDialog.Builder(this)
+					 	.setTitle("Please fix the following error(s)")
+		         	    .setMessage(errors.toString())
+		         	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		         	        public void onClick(DialogInterface dialog, int which) { 
+		         	            // continue with delete
+		         	        }
+		         	     })
+		         	     .show();
+				 }
 			 }
+			
 			 else{
 				 Intent theIndent = new Intent(getApplication(), MainActivity.class);
 				 this.setInitialData(userSettings);

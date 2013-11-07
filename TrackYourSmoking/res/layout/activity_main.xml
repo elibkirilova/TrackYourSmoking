@@ -11,8 +11,8 @@
  <fragment
       android:id="@+id/gifFragmentLayout"
       android:name="com.example.trackyoursmoking.GifFragment"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+       android:layout_width="0px"
+      android:layout_height="0px"
       android:layout_alignParentLeft="true"
       android:layout_below="@+id/dailyDataTextView"
       android:layout_marginTop="44dp" />
@@ -46,10 +46,9 @@
 
   <ImageView
       android:id="@+id/imageView1"
-     android:layout_width="154px"
-android:layout_height="217px"
-      android:layout_centerVertical="true"
-      android:layout_toRightOf="@+id/initialDataTextView"
-      android:src="@drawable/animation" />
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true"
+      android:layout_centerVertical="true" />
  
 </RelativeLayout>
