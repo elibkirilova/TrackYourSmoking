@@ -3,7 +3,21 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/action_settings"/>
-
+        
+        android:title="@string/action_settings"
+        android:showAsAction="ifRoom|withText"
+     />
+	<item
+	    android:id="@+id/action_reporting"
+	    android:title="@string/action_reporting"
+	    android:icon="@drawable/reporting_icon"
+	    android:showAsAction="ifRoom|withText"
+	/>
+	
+	<item
+	    android:id="@+id/action_sync"
+	    android:title="@string/action_sync"
+	    android:icon="@drawable/sync_icon"
+	    android:showAsAction="ifRoom|withText"
+	/>
 </menu>

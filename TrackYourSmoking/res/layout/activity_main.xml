@@ -2,53 +2,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:hardwareAccelerated="false"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity"  android:hardwareAccelerated="false">
+    tools:context=".MainActivity" >
 
- <fragment
-      android:id="@+id/gifFragmentLayout"
-      android:name="com.example.trackyoursmoking.GifFragment"
-       android:layout_width="0px"
-      android:layout_height="0px"
-      android:layout_alignParentLeft="true"
-      android:layout_below="@+id/dailyDataTextView"
-      android:layout_marginTop="44dp" />
-      
-   
+    <Button
+        android:id="@+id/addCigaretteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/add_cigarette"
+        android:drawableRight="@drawable/cigar_smoker" />
 
-  <Button
-      android:id="@+id/addCigaretteButton"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentLeft="true"
-      android:layout_alignParentRight="true"
-      android:text="@string/add_cigarette" />
+    <TextView
+        android:id="@+id/dailyDataTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-  <TextView
-      android:id="@+id/dailyDataTextView"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignLeft="@+id/gifFragmentLayout"
-      android:layout_alignParentTop="true"
-      android:textAppearance="?android:attr/textAppearanceLarge" />
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true" />
 
-  <TextView
-      android:id="@+id/initialDataTextView"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignLeft="@+id/gifFragmentLayout"
-      android:layout_below="@+id/gifFragmentLayout"
-      android:layout_marginTop="89dp"/>
-
-  <ImageView
-      android:id="@+id/imageView1"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_centerInParent="true"
-      android:layout_centerVertical="true" />
- 
 </RelativeLayout>

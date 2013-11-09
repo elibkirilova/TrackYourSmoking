@@ -1,11 +1,17 @@
 package com.example.trackyoursmoking;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,6 +48,35 @@ public class MainActivity extends FragmentActivity  {
 
         InitialUserData userData = this.getInitialData();
         
+        NotificationCompat.Builder mBuilder =
+        	    new NotificationCompat.Builder(this)
+        	    .setSmallIcon(R.drawable.ic_launcher)
+        	    .setContentTitle("I'm just hangin'")
+        	    .setContentText("this app settings -> allow hangin")
+        	    .setAutoCancel(false);
+       
+        Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
+
+     // The stack builder object will contain an artificial back stack for the
+     // started Activity.
+     // This ensures that navigating backward from the Activity leads out of
+     // your application to the Home screen.
+     TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+     // Adds the back stack for the Intent (but not the Intent itself)
+     stackBuilder.addParentStack(InitialUserDataActivity.class);
+     // Adds the Intent that starts the Activity to the top of the stack
+     stackBuilder.addNextIntent(resultIntent);
+     PendingIntent resultPendingIntent =
+             stackBuilder.getPendingIntent(
+                 0,
+                 PendingIntent.FLAG_UPDATE_CURRENT
+             );
+     mBuilder.setContentIntent(resultPendingIntent);
+     NotificationManager mNotificationManager =
+         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+     // mId allows you to update the notification later on.
+     mNotificationManager.notify(12, mBuilder.build());
+        
         
         if(userData == null){
         	 
@@ -62,6 +97,38 @@ public class MainActivity extends FragmentActivity  {
 
         });
        
+//        NotificationCompat.Builder mBuilder =
+//        	    new NotificationCompat.Builder(this)
+//        	    .setSmallIcon(R.drawable.ic_launcher)
+//        	    .setContentTitle("Above your daily limit")
+//        	    .setContentText("with 5 cigarettes.")
+//        	    .setAutoCancel(true).setSound (Uri.parse("android.resource://"
+//        	            + getApplicationContext().getPackageName() + "/" + R.raw.funeral_march));
+//       
+//        Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
+//
+//     // The stack builder object will contain an artificial back stack for the
+//     // started Activity.
+//     // This ensures that navigating backward from the Activity leads out of
+//     // your application to the Home screen.
+//     TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+//     // Adds the back stack for the Intent (but not the Intent itself)
+//     stackBuilder.addParentStack(InitialUserDataActivity.class);
+//     // Adds the Intent that starts the Activity to the top of the stack
+//     stackBuilder.addNextIntent(resultIntent);
+//     PendingIntent resultPendingIntent =
+//             stackBuilder.getPendingIntent(
+//                 0,
+//                 PendingIntent.FLAG_UPDATE_CURRENT
+//             );
+//     mBuilder.setContentIntent(resultPendingIntent);
+//     NotificationManager mNotificationManager =
+//         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//     // mId allows you to update the notification later on.
+//     mNotificationManager.notify(12345, mBuilder.build());
+       
+        
+        
 
         TextView dailyDataTextView = (TextView)findViewById(R.id.dailyDataTextView);
         dailyDataTextView.setText("Today: "+ repository.getCigarettesSmokedToday());
@@ -70,29 +137,14 @@ public class MainActivity extends FragmentActivity  {
         //initialDataTextView.setText(userData.toString());
         
         ImageView img = (ImageView)findViewById(R.id.imageView1);
-        img.setBackgroundResource(R.drawable.animation_no_smoking);
+        img.setBackgroundResource(R.drawable.animation_under_minimum_smoking);
 
         frameAnimation = (AnimationDrawable) img.getBackground();
         
         frameAnimation.start();
- 
-    }
-	
-	
-	@Override
-    public void onWindowFocusChanged(boolean hasFocus) {        
-        super.onWindowFocusChanged(hasFocus);
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//  
-//        GifFragment pricingFragment = new GifFragment();
-//          
-//        fragmentTransaction.replace(R.id.gifFragmentLayout, pricingFragment);
-//          
-//        fragmentTransaction.commit();
-    }
 
+    }
+	
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -108,6 +160,7 @@ public class MainActivity extends FragmentActivity  {
 	    	switch (item.getItemId()) {
 	        case R.id.action_settings:
 	        startActivity(new Intent(getApplication(), UserSettingActivity.class));
+	       
 	        return true;
 	       
         	default:
