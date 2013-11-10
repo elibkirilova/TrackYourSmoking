@@ -16,6 +16,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:padding="20dp"
         android:text="@string/add_cigarette"
         android:drawableRight="@drawable/cigar_smoker" />
 
@@ -24,13 +25,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+    
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/smokingStateImageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:gravity="center" 
+        android:contentDescription="@string/smoking_state"/>
+
+    <TextView
+        android:id="@+id/smokingStateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/dailyDataTextView"
+        android:text="@string/under_minimum_smoke_state"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

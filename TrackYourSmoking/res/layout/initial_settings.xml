@@ -1,12 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="474dp"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    android:paddingTop="@dimen/activity_vertical_margin" >
 
     <SeekBar
         android:id="@+id/minCigPerDaySeekBar"
@@ -26,7 +29,7 @@
         android:text="@string/min_cigarettens_per_day_text_view" />
 
     <TextView
-        android:id="@+id/MinCigPerDayValue"
+        android:id="@+id/minCigPerDayValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/minCigPerDayTextView"
@@ -44,7 +47,7 @@
         android:text="@string/max_cigarettens_per_day_text_view" />
 
     <TextView
-        android:id="@+id/MaxCigPerDayValue"
+        android:id="@+id/maxCigPerDayValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/maxCigPerDayTextView"
@@ -59,70 +62,52 @@
         android:layout_below="@+id/maxCigPerDayTextView"
         android:layout_marginTop="16dp" />
 
-  <RadioGroup
-      android:id="@+id/pricingRadioGroup"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignLeft="@+id/maxCigPerDaySeekBar"
-      android:layout_centerVertical="true"
-      android:orientation="horizontal" >
-
-      <RadioButton
-          android:id="@+id/perPackRadio"
+      <TextView
+          android:id="@+id/pricePerCigaretteTextView"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:checked="true"
-          android:text="@string/radio_per_pack" />
-      
-      <RadioButton
-	      android:id="@+id/perCigaretteRadio"
-	      android:layout_width="wrap_content"
-	      android:layout_height="wrap_content"
-	      android:text="@string/radio_per_cigarette" />
-  </RadioGroup>
+          android:layout_alignParentLeft="true"
+          android:layout_below="@+id/maxCigPerDaySeekBar"
+          android:layout_marginTop="17dp"
+          android:text="@string/price_per_cigarette" />
+  
+     <EditText
+         android:id="@+id/pricePerCigaretteEditText"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/monthMoneyLimitEditText"
+         android:layout_alignParentRight="true"
+         android:layout_below="@+id/maxCigPerDaySeekBar"
+         android:inputType="numberDecimal" />
 
-  <TextView
-      android:id="@+id/pricingTitleTextView"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_above="@+id/pricingRadioGroup"
-      android:layout_alignParentLeft="true"
-      android:text="@string/pricing_title" />
+    <Button
+        android:id="@+id/saveSettingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/save_settings" />
 
-  <RelativeLayout
-      android:id="@+id/pricingFragmentLayout"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignLeft="@+id/pricingRadioGroup"
-      android:layout_below="@+id/pricingRadioGroup"
-      android:layout_marginTop="16dp" >
-  </RelativeLayout>
+    <TextView
+        android:id="@+id/monthMoneyLimitTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/pricePerCigaretteTextView"
+        android:layout_marginTop="17dp"
+        android:text="@string/month_money_limit" />
 
-  <Button
-      android:id="@+id/saveSettingsButton"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentLeft="true"
-      android:layout_alignRight="@+id/maxCigPerDaySeekBar"
-      android:text="@string/save_settings" />
-
-  <TextView
-      android:id="@+id/monthMoneyLimitTextView"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_above="@+id/pricingTitleTextView"
-      android:layout_alignParentLeft="true"
-      android:text="@string/month_money_limit" />
-
-  <EditText
-      android:id="@+id/cigPerPackEditText"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignBottom="@+id/monthMoneyLimitTextView"
-      android:layout_toRightOf="@+id/MinCigPerDayValue"
-      android:ems="5"
-      android:textColorHint="@color/inline_errors"
-      android:inputType="numberDecimal" />
-
+    <EditText
+        android:id="@+id/monthMoneyLimitEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/pricePerCigaretteEditText"
+        android:layout_toRightOf="@+id/monthMoneyLimitTextView"
+        android:ems="10"
+        android:inputType="numberDecimal" />
+  
 </RelativeLayout>
+
+</ScrollView>

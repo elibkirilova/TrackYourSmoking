@@ -7,8 +7,8 @@
     <string name="action_sync">Sync with clould</string>
     <string name="action_reporting">Reports</string>
     
-    <string name="min_cigarettens_per_day_text_view">Min cigarettens per day</string>
-    <string name="max_cigarettens_per_day_text_view">Max cigarettens per day</string>
+    <string name="min_cigarettens_per_day_text_view">Min cigarettes per day</string>
+    <string name="max_cigarettens_per_day_text_view">Max cigarettes per day</string>
     
     <string name="pricing_title">Pricing</string>
     
@@ -25,14 +25,16 @@
     
     <string name="save_settings">Save Settings</string>
     
-    <string name="add_cigarette">Smoke Another One</string>
+    <string name="add_cigarette">Another One</string>
     
-    <string name="pref_category_cig_count_levels_title">Cigarettes count levels</string>
+    <string name="pref_initial_settings">Cigarettes count levels</string>
     
-    <string-array name="menu_items">
-        <item>Main screen</item>
-        <item>Reports</item>
-        <item>Settings</item>
-        <item>About</item>
-    </string-array>
+    <string name="smoking_state">Smoking state image</string>
+    
+     <string name="no_smoke_state">No cigarettes registered today</string>
+     <string name="under_minimum_smoke_state">under the minimum</string>
+     <string name="reached_minimum_smoke_state">reached the minimum</string>
+     <string name="average_smoke_state">average smoking activity</string>
+     <string name="reached_maximum_smoke_state">reached the maximum</string>
+     <string name="above_limit_smoke_state">above the day limit</string>
 </resources>

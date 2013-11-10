@@ -85,17 +85,7 @@ public class MainActivity extends FragmentActivity  {
         	 
         }
         
-        addCigaretteButton = (Button)findViewById(R.id.addCigaretteButton);
-        
-        addCigaretteButton.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View arg0) {
-				
-				reuestAddCigarette();
-			}
-
-        });
+      
        
 //        NotificationCompat.Builder mBuilder =
 //        	    new NotificationCompat.Builder(this)
@@ -132,13 +122,27 @@ public class MainActivity extends FragmentActivity  {
 
         TextView dailyDataTextView = (TextView)findViewById(R.id.dailyDataTextView);
         dailyDataTextView.setText("Today: "+ repository.getCigarettesSmokedToday());
+        //dailyDataTextView.setText(userData.toString());
 
         //TextView initialDataTextView = (TextView)findViewById(R.id.initialDataTextView);
         //initialDataTextView.setText(userData.toString());
         
-        ImageView img = (ImageView)findViewById(R.id.imageView1);
+        ImageView img = (ImageView)findViewById(R.id.smokingStateImageView);
         img.setBackgroundResource(R.drawable.animation_under_minimum_smoking);
 
+        addCigaretteButton = (Button)findViewById(R.id.addCigaretteButton);
+        
+        addCigaretteButton.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				
+				reuestAddCigarette();
+			}
+
+        });
+        
+        
         frameAnimation = (AnimationDrawable) img.getBackground();
         
         frameAnimation.start();
@@ -203,16 +207,10 @@ public class MainActivity extends FragmentActivity  {
 					initialData.setMaxCigarettensPerDay(sharedPrefs.getInt("max_cigarettes_per_day", 0));
 					initialData.setMinCigarettensPerDay(sharedPrefs.getInt("min_cigarettes_per_day", 0));
 					initialData.setPricePerCigarette(Double.longBitsToDouble(sharedPrefs.getLong("price_per_cigarette", 5)));
-					Long moneyLimit = sharedPrefs.getLong("month_money_limit", -1);
-					if(moneyLimit != -1){
-						initialData.setMonthMoneyLimit(Double.longBitsToDouble(moneyLimit));
-					}
-					if(sharedPrefs.getBoolean("pricing_on_pack", false)){
-						PackOfCigarettens pack = new PackOfCigarettens();
-						pack.setCountOfCigarettes(sharedPrefs.getInt("count_in_pack", 5));
-						pack.setPrice(Double.longBitsToDouble(sharedPrefs.getLong("pack_price", 5)));
-						initialData.setPackOfCigarettens(pack);
-					}
+                    Long moneyLimit = sharedPrefs.getLong("month_money_limit", -1);
+                    if(moneyLimit != -1){
+                            initialData.setMonthMoneyLimit(Double.longBitsToDouble(moneyLimit));
+                    }
 					return initialData;
 				}			
 			return null;

@@ -13,7 +13,6 @@ public class InitialUserData {
 	
 	private double pricePerCigarette;
 	
-	private PackOfCigarettens pack;
 	
 	 public int getMinCigarettensPerDay() {
 	        return minCigarettensPerDay;
@@ -67,15 +66,7 @@ public class InitialUserData {
 	        this.pricePerCigarette = pricePerCigarette;
 	    }
 	    
-	    public PackOfCigarettens getPackOfCigarettens() {
-	        return pack;
-	    }
-	
-		 public void setPackOfCigarettens(PackOfCigarettens pack) {
-		    	this.setPricePerCigarette(pack.getPrice() / pack.getCountOfCigarettes()); 
-		        this.pack = pack;
-		    }
-		 
+
 		 @Override public String toString() {
 			    StringBuilder result = new StringBuilder();
 			    String NEW_LINE = System.getProperty("line.separator");
@@ -92,16 +83,7 @@ public class InitialUserData {
 			    result.append(" Cig Price: ");
 			    result.append(this.getPricePerCigarette());
 			    result.append(NEW_LINE);
-			    if(this.getPackOfCigarettens() != null){
-			    	result.append(" Pricing per pack");
-			    	 result.append(NEW_LINE);
-			    	 result.append(this.getPackOfCigarettens());
-			    }
-			    else{
-			    	result.append(" Pricing per cigarette");
-			    	 result.append(NEW_LINE);
-			    }
-			    
+			   
 			    return result.toString();
 			  }
 }

@@ -1,6 +1,7 @@
 package com.example.trackyoursmoking;
 
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -20,6 +21,7 @@ public class UserSettingActivity extends PreferenceActivity   {
         
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.settings);
+        
     }
     
     

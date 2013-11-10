@@ -23,7 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.trackyoursmoking.UserSettingActivity"></activity>
-        <activity android:name="com.example.trackyoursmoking.InitialUserDataActivity"></activity>
+        <activity android:name="com.example.trackyoursmoking.UserSettingActivity">
+          
+        </activity>
+        <activity android:name="com.example.trackyoursmoking.InitialUserDataActivity">
+           <intent-filter>
+                <action android:name="android.intent.action.USER_INITIAL_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

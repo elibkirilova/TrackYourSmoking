@@ -65,18 +65,14 @@ public class InitialUserDataActivity extends Activity {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.initial_settings);
 	        
-	        minCigPerDayTextView = (TextView) findViewById(R.id.MinCigPerDayValue);
-	        maxCigPerDayTextView = (TextView) findViewById(R.id.MaxCigPerDayValue);
+	        minCigPerDayTextView = (TextView) findViewById(R.id.minCigPerDayValue);
+	        maxCigPerDayTextView = (TextView) findViewById(R.id.maxCigPerDayValue);
 	        
-	        monthMoneyLimitEditText = (EditText) findViewById(R.id.cigPerPackEditText);
+	        monthMoneyLimitEditText = (EditText) findViewById(R.id.monthMoneyLimitEditText);
 	        
 	        minCigPerDaySeekBar = (SeekBar) findViewById(R.id.minCigPerDaySeekBar);
 	        maxCigPerDaySeekBar = (SeekBar) findViewById(R.id.maxCigPerDaySeekBar);
 	       
-	        perPackRadio = (RadioButton) findViewById(R.id.perPackRadio);
-	        perCigaretteRadio = (RadioButton) findViewById(R.id.perCigaretteRadio);
-	       
-	        pricingRadioGroup = (RadioGroup) findViewById(R.id.pricingRadioGroup);
 	        
 	        saveSettingsButton = (Button)findViewById(R.id.saveSettingsButton);
 	        
@@ -91,35 +87,35 @@ public class InitialUserDataActivity extends Activity {
 	        });
 	        
 	        
-	        pricingRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener()
-	        {
-	            public void onCheckedChanged(RadioGroup group, int checkedId) {
-	                 
-	               if(perPackRadio.isChecked()){
-	            	   FragmentManager fragmentManager = getFragmentManager();
-	       	        
-		       	       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		       	 
-		       	       PricingMainInfoFragment pricingFragment = new PricingMainInfoFragment(true);
-		       	         
-		       	       fragmentTransaction.replace(R.id.pricingFragmentLayout, pricingFragment);
-		       	         
-		       	       fragmentTransaction.commit();
-	               }
-	               else if(perCigaretteRadio.isChecked()){
-	            	   FragmentManager fragmentManager = getFragmentManager();
-		       	        
-		       	       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-		       	 
-		       	       PricingMainInfoFragment pricingFragment = new PricingMainInfoFragment(false);
-		       	         
-		       	       fragmentTransaction.replace(R.id.pricingFragmentLayout, pricingFragment);
-		       	         
-		       	       fragmentTransaction.commit();
-	               }
-	            }
-	        });
-	        
+//	        pricingRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener()
+//	        {
+//	            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//	                 
+//	               if(perPackRadio.isChecked()){
+//	            	   FragmentManager fragmentManager = getFragmentManager();
+//	       	        
+//		       	       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//		       	 
+//		       	       PricingMainInfoFragment pricingFragment = new PricingMainInfoFragment();
+//		       	         
+//		       	     //  fragmentTransaction.replace(R.id.pricingFragmentLayout, pricingFragment);
+//		       	         
+//		       	       fragmentTransaction.commit();
+//	               }
+//	               else if(perCigaretteRadio.isChecked()){
+//	            	   FragmentManager fragmentManager = getFragmentManager();
+//		       	        
+//		       	       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//		       	 
+//		       	       PricingMainInfoFragment pricingFragment = new PricingMainInfoFragment();
+//		       	         
+//		       	     //  fragmentTransaction.replace(R.id.pricingFragmentLayout, pricingFragment);
+//		       	         
+//		       	       fragmentTransaction.commit();
+//	               }
+//	            }
+//	        });
+//	        
 	        
 	        if(savedInstanceState == null){
 	        	
@@ -142,15 +138,15 @@ public class InitialUserDataActivity extends Activity {
 	        minCigPerDaySeekBar.setMax(maxCigPerDay);
 	        maxCigPerDaySeekBar.setMax(MAX_CIG_PER_DAY);
 	        
-	        FragmentManager fragmentManager = getFragmentManager();
-	        
-	        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-	 
-	        PricingMainInfoFragment pricingFragment = new PricingMainInfoFragment(true);
-	         
-	        fragmentTransaction.add(R.id.pricingFragmentLayout, pricingFragment);
-	         
-	        fragmentTransaction.commit();
+//	        FragmentManager fragmentManager = getFragmentManager();
+//	        
+//	        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//	 
+//	        PricingMainInfoFragment pricingFragment = new PricingMainInfoFragment();
+//	         
+//	       // fragmentTransaction.add(R.id.pricingFragmentLayout, pricingFragment);
+//	         
+//	        fragmentTransaction.commit();
 	    }
 
 
@@ -244,50 +240,10 @@ public class InitialUserDataActivity extends Activity {
 				
 			}
 			
-			 if(perPackRadio.isChecked()){
-				 
-				 PackOfCigarettens pack = new PackOfCigarettens();
-
-				 EditText cigPerPackEditText = (EditText) findViewById(R.id.cigPerPackEditText);
-				 String cigPerPackValue = cigPerPackEditText.getText().toString().trim();
-					
-					if(cigPerPackValue.length() > 0){
-						try{
-							pack.setCountOfCigarettes(Integer.parseInt(cigPerPackValue));
-						}
-						catch(InvalidParameterException ex){
-							errors.append(ex.getMessage());
-							errors.append(NEW_LINE);
-							isValid = false;
-						}
-					}
-					else{
-						cigPerPackEditText.setHint("(required)");
-						isValid = false;
-					}
-				 EditText pricePerPackEditText = (EditText) findViewById(R.id.pricePerPackEditText);
-				 String pricePerPack = pricePerPackEditText.getText().toString().trim();
-					
-					if(pricePerPack.length() > 0){
-						try{
-							pack.setPrice(Double.parseDouble(pricePerPack));
-						}
-						catch(InvalidParameterException ex){
-							errors.append(ex.getMessage());
-							errors.append(System.getProperty("line.separator"));
-							isValid = false;
-						}
-					}
-					else{
-						pricePerPackEditText.setHint("(required)");
-						isValid = false;
-					}
-					userSettings.setPackOfCigarettens(pack);
-             }
-             else if(perCigaretteRadio.isChecked()){
+			
             	 EditText pricePerCigaretteEditText = (EditText) findViewById(R.id.pricePerCigaretteEditText);
             	 String pricePerCigarette = pricePerCigaretteEditText.getText().toString().trim();
-					
+				
 					if(pricePerCigarette.length() > 0){
 						try{
 							userSettings.setPricePerCigarette(Double.parseDouble(pricePerCigarette));
@@ -303,20 +259,8 @@ public class InitialUserDataActivity extends Activity {
 						pricePerCigaretteEditText.setHint("(required)");
 						isValid = false;
 					}
-             }
-             else{
-            	 new AlertDialog.Builder(this)
-         	    .setMessage("You shoud choose pricing group.")
-         	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-         	        public void onClick(DialogInterface dialog, int which) { 
-         	            // continue with delete
-         	        }
-         	     })
-         	     .show();
-            	 
-            	 return;
-             }
-			 
+            
+           
 			 if(!isValid){
 				 if(errors.length() != 0){
 					 new AlertDialog.Builder(this)
@@ -349,18 +293,14 @@ public class InitialUserDataActivity extends Activity {
 
 					editor.putInt("max_cigarettes_per_day", initialData.getMaxCigarettensPerDay());
 					editor.putInt("min_cigarettes_per_day", initialData.getMinCigarettensPerDay());
+					
 					if(initialData.getMonthMoneyLimit() != null)
-					{
-						editor.putLong("month_money_limit", Double.doubleToLongBits((Double) initialData.getMonthMoneyLimit()));
-					}
-					editor.putLong("price_per_cigarette", Double.doubleToLongBits((Double) initialData.getPricePerCigarette()));
-						if(initialData.getPackOfCigarettens() != null){
-							editor.putBoolean("pricing_on_pack", true);
-							editor.putInt("count_in_pack", initialData.getPackOfCigarettens().getCountOfCigarettes());
-							editor.putLong("pack_price", Double.doubleToLongBits((Double) initialData.getPackOfCigarettens().getPrice()));
-						}
-						
-						editor.commit();
+                    {
+                            editor.putLong("month_money_limit", Double.doubleToLongBits((Double) initialData.getMonthMoneyLimit()));
+                    }
+                    editor.putLong("price_per_cigarette", Double.doubleToLongBits((Double) initialData.getPricePerCigarette()));
+					
+					editor.commit();
 								
 				}
 		
