@@ -24,15 +24,9 @@ import android.widget.TextView;
 
 public class DailyReportActivity extends Fragment  {
 	
-	// Store a unique message using your package name to avoid conflicts
-	// with other apps. This stores the stock symbol I plan on displaying
 	public final static String STOCK_SYMBOL = "com.example.myfirstapp.STOCK";
 	
-	// Manages key valued pairs associated with stock symbols
-//	private SharedPreferences stockSymbolsEntered;
 	
-	// Table inside the scroll view that holds stock symbols
-	// and buttons
 	private TableLayout stockTableScrollView;
 	
 	// Where the user enters a new stock symbol

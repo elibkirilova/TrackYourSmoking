@@ -1,10 +1,16 @@
 package com.example.trackyoursmoking;
 
+import java.util.List;
+
 public interface IRepository {
 
-	int getCigarettesSmokedToday();
+	int getCigarettesSmokedTodayCount();
 	
-	int addCigaretteToday();
+	List<SmokingActivity> getCigarettesSmokedToday();
+	
+	SmokingActivity addCigaretteToday();
+	
+	List<SmokingActivity> takeCigarettesForGivenDay(int year, int month, int day);
 	
 	boolean setInitialData(InitialUserData userData);
 	

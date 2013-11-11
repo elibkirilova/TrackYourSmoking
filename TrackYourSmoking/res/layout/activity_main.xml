@@ -36,6 +36,15 @@
         android:layout_centerVertical="true"
         android:gravity="center" 
         android:contentDescription="@string/smoking_state"/>
+    
+    <ImageView
+        android:id="@+id/smokingStateImageViewSmaller"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:gravity="center" 
+        android:contentDescription="@string/smoking_state"/>
 
     <TextView
         android:id="@+id/smokingStateTextView"

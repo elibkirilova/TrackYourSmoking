@@ -86,37 +86,7 @@ public class InitialUserDataActivity extends Activity {
 
 	        });
 	        
-	        
-//	        pricingRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener()
-//	        {
-//	            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//	                 
-//	               if(perPackRadio.isChecked()){
-//	            	   FragmentManager fragmentManager = getFragmentManager();
-//	       	        
-//		       	       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//		       	 
-//		       	       PricingMainInfoFragment pricingFragment = new PricingMainInfoFragment();
-//		       	         
-//		       	     //  fragmentTransaction.replace(R.id.pricingFragmentLayout, pricingFragment);
-//		       	         
-//		       	       fragmentTransaction.commit();
-//	               }
-//	               else if(perCigaretteRadio.isChecked()){
-//	            	   FragmentManager fragmentManager = getFragmentManager();
-//		       	        
-//		       	       FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//		       	 
-//		       	       PricingMainInfoFragment pricingFragment = new PricingMainInfoFragment();
-//		       	         
-//		       	     //  fragmentTransaction.replace(R.id.pricingFragmentLayout, pricingFragment);
-//		       	         
-//		       	       fragmentTransaction.commit();
-//	               }
-//	            }
-//	        });
-//	        
-	        
+	     
 	        if(savedInstanceState == null){
 	        	
 	        	minCigPerDay = DEFAULT_MIN_CIG_PER_DAY;
@@ -137,16 +107,6 @@ public class InitialUserDataActivity extends Activity {
 	        
 	        minCigPerDaySeekBar.setMax(maxCigPerDay);
 	        maxCigPerDaySeekBar.setMax(MAX_CIG_PER_DAY);
-	        
-//	        FragmentManager fragmentManager = getFragmentManager();
-//	        
-//	        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//	 
-//	        PricingMainInfoFragment pricingFragment = new PricingMainInfoFragment();
-//	         
-//	       // fragmentTransaction.add(R.id.pricingFragmentLayout, pricingFragment);
-//	         
-//	        fragmentTransaction.commit();
 	    }
 
 
