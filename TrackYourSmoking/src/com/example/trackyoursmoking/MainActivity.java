@@ -167,6 +167,10 @@ public class MainActivity extends FragmentActivity  {
 	       
 	        return true;
 	       
+	        case R.id.action_reporting:
+		        startActivity(new Intent(getApplication(), ReportingActivity.class));
+		       
+		        return true;
         	default:
         	return super.onOptionsItemSelected(item);
 	    	}

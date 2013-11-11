@@ -26,6 +26,10 @@
         <activity android:name="com.example.trackyoursmoking.UserSettingActivity">
           
         </activity>
+        
+         <activity android:name="com.example.trackyoursmoking.ReportingActivity">
+          
+        </activity>
         <activity android:name="com.example.trackyoursmoking.InitialUserDataActivity">
            <intent-filter>
                 <action android:name="android.intent.action.USER_INITIAL_SETTINGS" />
