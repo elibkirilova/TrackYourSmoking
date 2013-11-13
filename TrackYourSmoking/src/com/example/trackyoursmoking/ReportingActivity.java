@@ -25,13 +25,13 @@ public class ReportingActivity extends FragmentActivity {
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
         mTabHost.addTab(
-                mTabHost.newTabSpec("tab1").setIndicator("yesterday",
+                mTabHost.newTabSpec("tab1").setIndicator("today",
                         getResources().getDrawable(R.drawable.reporting_icon)),
                 DailyReportActivity.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab2").setIndicator("last week",
                 		  getResources().getDrawable(R.drawable.reporting_icon)),
-                          DailyReportActivity.class, null);
+                          ReportForDatesPeriod.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab3").setIndicator("last month",
                 		  getResources().getDrawable(R.drawable.reporting_icon)),
@@ -47,7 +47,7 @@ public class ReportingActivity extends FragmentActivity {
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab6").setIndicator("for specified days and time period",
                 		  getResources().getDrawable(R.drawable.reporting_icon)),
-                          DailyReportActivity.class, null);
+                		  ReportForDateAndTimePeriod.class, null);
         
         TabWidget tw = (TabWidget) findViewById(android.R.id.tabs);
         LinearLayout ll = (LinearLayout) tw.getParent();

@@ -44,4 +44,10 @@ public class DefaultRepository implements IRepository {
 		return null;
 	}
 
+	@Override
+	public void removeActivity(int activityId) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

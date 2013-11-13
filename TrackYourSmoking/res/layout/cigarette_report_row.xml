@@ -9,6 +9,13 @@ and added to the ScrollView -->
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
     android:padding="@dimen/activity_horizontal_margin" >
+    
+	<TextView
+	    android:id="@+id/activityIdTextView"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="hidden"
+	    />
 
     <TextView
         android:id="@+id/stockSymbolTextView"
@@ -25,12 +32,5 @@ and added to the ScrollView -->
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="delete" />
-
-    <Button
-        android:id="@+id/quoteFromWebButton"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="web" />
 
 </TableRow>

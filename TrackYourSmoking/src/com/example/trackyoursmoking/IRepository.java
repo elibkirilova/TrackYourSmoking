@@ -15,4 +15,6 @@ public interface IRepository {
 	boolean setInitialData(InitialUserData userData);
 	
 	InitialUserData getInitialData();
+	
+	void removeActivity(int activityId);
 }

@@ -30,7 +30,7 @@ import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity  {
 	
-	private  IRepository repository;
+private  IRepository repository;
 	
 	public MainActivity(){
 		this.repository = new TestRepository();
@@ -49,7 +49,6 @@ public class MainActivity extends FragmentActivity  {
 
         InitialUserData userData = this.getInitialData();
 //        
-
         
         if(userData == null){
         	 
@@ -59,42 +58,42 @@ public class MainActivity extends FragmentActivity  {
         }
         
       
-        Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
-        NotificationCompat.Builder mBuilder =
-        	    new NotificationCompat.Builder(this)
-       	    .setSmallIcon(R.drawable.ic_launcher)
-       	    .setContentTitle("Above your daily limit")
-       	    .setContentText("with 5 cigarettes.")
-        	    .setAutoCancel(true).setSound (Uri.parse("android.resource://"
-        	            + getApplicationContext().getPackageName() + "/" + R.raw.funeral_march));
-       
 //        Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
+//        NotificationCompat.Builder mBuilder =
+//        	    new NotificationCompat.Builder(this)
+//       	    .setSmallIcon(R.drawable.ic_launcher)
+//       	    .setContentTitle("Above your daily limit")
+//       	    .setContentText("with 5 cigarettes.")
+//        	    .setAutoCancel(true).setSound (Uri.parse("android.resource://"
+//        	            + getApplicationContext().getPackageName() + "/" + R.raw.funeral_march));
+//       
+////        Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
 //
 //     // The stack builder object will contain an artificial back stack for the
 //     // started Activity.
 //     // This ensures that navigating backward from the Activity leads out of
 //     // your application to the Home screen.
-  TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-//     // Adds the back stack for the Intent (but not the Intent itself)
-    stackBuilder.addParentStack(InitialUserDataActivity.class);
-//     // Adds the Intent that starts the Activity to the top of the stack
-    stackBuilder.addNextIntent(resultIntent);
-    PendingIntent resultPendingIntent =
-            stackBuilder.getPendingIntent(
-                0,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            );
-     mBuilder.setContentIntent(resultPendingIntent);
-     NotificationManager mNotificationManager =
-         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-     // mId allows you to update the notification later on.
-     mNotificationManager.notify(12345, mBuilder.build());
+//  TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+////     // Adds the back stack for the Intent (but not the Intent itself)
+//    stackBuilder.addParentStack(InitialUserDataActivity.class);
+////     // Adds the Intent that starts the Activity to the top of the stack
+//    stackBuilder.addNextIntent(resultIntent);
+//    PendingIntent resultPendingIntent =
+//            stackBuilder.getPendingIntent(
+//                0,
+//                PendingIntent.FLAG_UPDATE_CURRENT
+//            );
+//     mBuilder.setContentIntent(resultPendingIntent);
+//     NotificationManager mNotificationManager =
+//         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//     // mId allows you to update the notification later on.
+//     mNotificationManager.notify(12345, mBuilder.build());
        
         
         
 
         TextView dailyDataTextView = (TextView)findViewById(R.id.dailyDataTextView);
-        dailyDataTextView.setText("Today: "+ repository.getCigarettesSmokedToday());
+        dailyDataTextView.setText("Today: "+ repository.getCigarettesSmokedTodayCount());
         //dailyDataTextView.setText(userData.toString());
 
         //TextView initialDataTextView = (TextView)findViewById(R.id.initialDataTextView);
@@ -238,5 +237,12 @@ Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
 			return null;
 		}
 		
+		
+		@Override
+		public void onResume() {
+		    super.onResume();
+		    // updateScreen();
+		   
+		}
 	}
 
