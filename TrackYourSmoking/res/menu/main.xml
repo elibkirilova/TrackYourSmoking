@@ -13,11 +13,4 @@
 	    android:icon="@drawable/reporting_icon"
 	    android:showAsAction="ifRoom|withText"
 	/>
-	
-	<item
-	    android:id="@+id/action_sync"
-	    android:title="@string/action_sync"
-	    android:icon="@drawable/sync_icon"
-	    android:showAsAction="ifRoom|withText"
-	/>
 </menu>

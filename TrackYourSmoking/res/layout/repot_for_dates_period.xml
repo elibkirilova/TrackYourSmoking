@@ -7,63 +7,63 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/linearLayout1"
-        android:layout_marginRight="26dp"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/showReportDateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/linearLayout1"
-        android:text="Button" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout1"
-        android:layout_marginRight="23dp"
-        android:layout_toLeftOf="@+id/textView2"
-        android:text="Medium Text"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_below="@+id/btnsFromToDateLinearLayout"
+        android:text="@string/get_report_btn" />
 
     <DatePicker
-        android:id="@+id/datePicker1"
+        android:id="@+id/datesIntervalDatePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button3"
+        android:layout_below="@+id/showReportDateButton"
         android:layout_centerHorizontal="true" />
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/btnsFromToDateLinearLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/dateToTextView"
         android:layout_centerHorizontal="true"
+        android:background="?android:attr/dividerVertical"
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/fromDateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:clickable="false"
+            android:text="@string/date_from_btn" 
+            android:background="?android:attr/selectableItemBackground"/>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/toDateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="@string/date_to_btn"
+            android:background="?android:attr/selectableItemBackground" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/dateFromTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnsFromToDateLinearLayout"
+        android:layout_alignLeft="@+id/btnsFromToDateLinearLayout"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/dateToTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/btnsFromToDateLinearLayout"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

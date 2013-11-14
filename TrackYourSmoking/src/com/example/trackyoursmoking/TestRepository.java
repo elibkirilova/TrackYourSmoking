@@ -36,7 +36,8 @@ public class TestRepository implements IRepository {
 		SmokingActivity newActivity = new SmokingActivity();
 		newActivity.setId(cigarettesSmoked.size());
 		newActivity.setCigarettePrice(initialData.getPricePerCigarette());
-		newActivity.setDateAndTime(new Date());
+		Calendar cal = Calendar.getInstance();
+		newActivity.setDateAndTime(cal.getTime());
 		cigarettesSmoked.add(newActivity);
 		return newActivity;
 	}

@@ -25,7 +25,7 @@ public class ReportForDatesPeriod extends Fragment {
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.repot_for_dates_period, container, false);
     
-        datePicker = (DatePicker) v.findViewById(R.id.datePicker1);
+        datePicker = (DatePicker) v.findViewById(R.id.datesIntervalDatePicker);
         
         int display_mode = getResources().getConfiguration().orientation;
 

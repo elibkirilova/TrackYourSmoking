@@ -9,19 +9,46 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:stretchColumns="yes" >
 
+     <TableRow
+         android:id="@+id/pickDateTableRow"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" >
+
+       
+        <!-- android:ems Defines the text size based off of the 
+        specified point size 
+        
+        android:layout_weight Defines how much of the containing
+        area is taken up by this component. Because there is no
+        other component by setting it for 1 that means it takes 
+        up all available space. If you had 2 components and set 
+        one at 2 and the other at one, the first would take up
+        2/3rds of the space and the second would get the last 1/3rd-->
+
+         <Button
+             android:id="@+id/pickDayButton"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:ems="10"
+             android:visibility="gone"
+             android:text="@string/pick_date_btn" />
+       
+    </TableRow>
+    
+    
     <TableRow
         android:id="@+id/tableRow0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/enterSymbolTextView"
+            android:id="@+id/dateAndCigarettesCountTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="cggarete time" 
-            android:gravity="center_horizontal"
+            android:layout_weight="1"
             android:ems="10"
-            android:layout_weight="1" />
+            android:gravity="center_horizontal"/>
 
         <!-- android:ems Defines the text size based off of the 
         specified point size 
@@ -36,7 +63,7 @@
        
     </TableRow>
 
-    <TableRow
+   <TableRow
         android:id="@+id/tableRow1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -51,14 +78,14 @@
         -->
         
         <TextView
-            android:id="@+id/stockSymbolTextView"
+            android:id="@+id/smokingActivityTimeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:layout_weight="1"
             android:ems="10"
+            android:gravity="center_horizontal"
             android:padding="5dp"
-            android:layout_weight="1" 
-            android:text="list symbol"/>
+            android:text="@string/smoking_activities_list_title" />
 
     </TableRow>
 
@@ -74,20 +101,20 @@
         that can't fit on the users screen -->
         
         <ScrollView
-            android:id="@+id/stockScrollView"
+            android:id="@+id/smokingActivityScrollView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:layout_weight="1"
             android:ems="10"
-            android:padding="5dp"
-            android:layout_weight="1" >
+            android:gravity="center_horizontal"
+            android:padding="5dp" >
 
             <!-- android:stretchColumns Defines that you want 
             this component to expand in width to fit any extra 
             space -->
             
             <TableLayout
-                android:id="@+id/stockTableScrollView"
+                android:id="@+id/smokingActivityTableScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"

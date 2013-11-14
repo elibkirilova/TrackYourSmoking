@@ -1,5 +1,8 @@
 package com.example.trackyoursmoking;
 
+import java.util.Calendar;
+import java.util.List;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -32,6 +35,8 @@ public class MainActivity extends FragmentActivity  {
 	
 private  IRepository repository;
 	
+
+
 	public MainActivity(){
 		this.repository = new TestRepository();
 	}
@@ -42,21 +47,41 @@ private  IRepository repository;
 	
 	Button addCigaretteButton;
 	AnimationDrawable frameAnimation;
+	ImageView img;
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         InitialUserData userData = this.getInitialData();
-//        
-        
+
         if(userData == null){
         	 
     		 startActivity(new Intent(getApplication(), InitialUserDataActivity.class));
     		 return;
-        	 
         }
+
+        int display_mode = getResources().getConfiguration().orientation;
+
+        if (display_mode == 1) {
+           img = (ImageView)findViewById(R.id.smokingStateImageView);
+        } else {
+        	img = (ImageView)findViewById(R.id.smokingStateImageViewSmaller);
+        }      
+
+        addCigaretteButton = (Button)findViewById(R.id.addCigaretteButton);
         
+        addCigaretteButton.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				
+				reuestAddCigarette();
+			}
+
+        });
+
+        updateScreen();
       
 //        Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
 //        NotificationCompat.Builder mBuilder =
@@ -92,44 +117,12 @@ private  IRepository repository;
         
         
 
-        TextView dailyDataTextView = (TextView)findViewById(R.id.dailyDataTextView);
-        dailyDataTextView.setText("Today: "+ repository.getCigarettesSmokedTodayCount());
+       
         //dailyDataTextView.setText(userData.toString());
 
         //TextView initialDataTextView = (TextView)findViewById(R.id.initialDataTextView);
         //initialDataTextView.setText(userData.toString());
-        
-        ImageView img;
-       
-
-        int display_mode = getResources().getConfiguration().orientation;
-
-        if (display_mode == 1) {
-           img = (ImageView)findViewById(R.id.smokingStateImageView);
-        } else {
-        	img = (ImageView)findViewById(R.id.smokingStateImageViewSmaller);
-        }      
-        
-        img.setBackgroundResource(R.drawable.animation_under_minimum_smoking);
-        
-        
-        addCigaretteButton = (Button)findViewById(R.id.addCigaretteButton);
-        
-        addCigaretteButton.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View arg0) {
-				
-				reuestAddCigarette();
-			}
-
-        });
-        
-        
-        frameAnimation = (AnimationDrawable) img.getBackground();
-        
-        frameAnimation.start();
-
+      
     }
 	
 	
@@ -192,27 +185,23 @@ Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
         	return super.onOptionsItemSelected(item);
 	    	}
 	    }
-	    private void reuestAddCigarette(){
+    private void reuestAddCigarette(){
 
-			 new AlertDialog.Builder(this)
-			 	.setTitle("Smoked another one?")
-	     	    .setMessage("One cigarette will be added to your daily amount.")
-	     	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		 new AlertDialog.Builder(this)
+		 	.setTitle("Smoked another one?")
+     	    .setMessage("One cigarette will be added to your daily amount.")
+     	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+     	        public void onClick(DialogInterface dialog, int which) { 
+     	           repository.addCigaretteToday();
+     	           updateScreen();
+     	        }
+     	     })
+     	     .setNegativeButton("No",new DialogInterface.OnClickListener() {
 	     	        public void onClick(DialogInterface dialog, int which) { 
-	     	            repository.addCigaretteToday();
-	     	           Intent intent = getIntent();
-	     	           finish();
-	     	           overridePendingTransition(0, 0);
-	     	           intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-	     	           startActivity(intent);  
+	     	           
 	     	        }
 	     	     })
-	     	     .setNegativeButton("No",new DialogInterface.OnClickListener() {
-		     	        public void onClick(DialogInterface dialog, int which) { 
-		     	           
-		     	        }
-		     	     })
-	     	     .show();
+     	     .show();
 	}
 
 		private InitialUserData getInitialData() {
@@ -241,8 +230,74 @@ Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
 		@Override
 		public void onResume() {
 		    super.onResume();
-		    // updateScreen();
+		     updateScreen();
 		   
 		}
+		
+		private void updateScreen(){
+			this.repository.getInitialData();
+			
+			Calendar c = Calendar.getInstance();
+			int mYear = c.get(Calendar.YEAR);
+			int mMonth = c.get(Calendar.MONTH);
+			int mDay = c.get(Calendar.DAY_OF_MONTH);
+			
+			List<SmokingActivity> smokedCigarettes = this.repository.takeCigarettesForGivenDay(mYear, mMonth, mDay);
+			
+			int activitiesCount = smokedCigarettes.size();
+			
+			double spendMoney = 0;
+
+			for(int i = 0; i < activitiesCount; ++i){
+				
+				spendMoney += smokedCigarettes.get(i).getCigarettePrice();
+			}
+			
+			loadSmokingData(mYear, mMonth, mDay, activitiesCount, spendMoney);
+			frameAnimation = (AnimationDrawable) img.getBackground();
+	        frameAnimation.start();
+		}	
+		
+	private void loadSmokingData(int selectedYear, int selectedMonth, int selectedDay, int cigarettesCount, double spendMoney){
+					
+				
+				TextView dataContainer = (TextView)findViewById(R.id.dailyDataTextView);
+			       
+				String status = "";
+				int minimum = repository.getInitialData().getMinCigarettensPerDay();
+				int maximum = repository.getInitialData().getMaxCigarettensPerDay();
+				
+				if(cigarettesCount == 0){
+					status = SmokingStates.NO_SMOKE_STATE;
+					img.setBackgroundResource(R.drawable.animation_no_smoking);
+				}
+				else if(cigarettesCount < minimum){
+					status = SmokingStates.UNDER_MINIMUM_SMOKE_STATE;
+					img.setBackgroundResource(R.drawable.animation_under_minimum_smoking);
+					
+				}
+				else if(cigarettesCount == maximum){
+					status = SmokingStates.REACHED_MAXIMUM_SMOKE_STATE;
+					img.setBackgroundResource(R.drawable.animation_under_minimum_smoking);
+				}
+				else if(cigarettesCount == minimum){
+					status = SmokingStates.REACHED_MINIMUM_SMOKE_STATE;
+					img.setBackgroundResource(R.drawable.animation_under_minimum_smoking);
+				}
+				else if(cigarettesCount > maximum){
+					status = SmokingStates.ABOVE_LIMIT_SMOKE_STATE;
+					img.setBackgroundResource(R.drawable.animation_under_minimum_smoking);
+				}
+				else if(cigarettesCount < maximum){
+					status = SmokingStates.AVERAGE_SMOKE_STATE;
+					img.setBackgroundResource(R.drawable.animation_under_minimum_smoking);
+				}
+				
+				dataContainer.setText(String.format("%s/%s/%s ciggarette(s) %s.%s %s.%s Spent money %.2g%n", 
+						selectedDay, selectedMonth + 1, selectedYear,
+						cigarettesCount, System.getProperty("line.separator"),
+						status, System.getProperty("line.separator"), spendMoney));
+				
+			}
 	}
 

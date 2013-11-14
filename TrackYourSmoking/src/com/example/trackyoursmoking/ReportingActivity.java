@@ -1,5 +1,7 @@
 package com.example.trackyoursmoking;
 
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,10 +26,15 @@ public class ReportingActivity extends FragmentActivity {
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
+        
+        Bundle dataTodayTab = new Bundle();
+        dataTodayTab.putLong("date", new Date().getTime());
+
+        
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab1").setIndicator("today",
                         getResources().getDrawable(R.drawable.reporting_icon)),
-                DailyReportActivity.class, null);
+                DailyReportActivity.class,dataTodayTab);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab2").setIndicator("last week",
                 		  getResources().getDrawable(R.drawable.reporting_icon)),
