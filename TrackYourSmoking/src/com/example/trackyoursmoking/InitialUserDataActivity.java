@@ -36,8 +36,8 @@ public class InitialUserDataActivity extends Activity {
 		
 		private static final int MIN_CIG_PER_DAY = 1;
 		private static final int MAX_CIG_PER_DAY = 100;
-		private static final int DEFAULT_MIN_CIG_PER_DAY = 5;
-		private static final int DEFAULT_MAX_CIG_PER_DAY = 20;
+		private static int DEFAULT_MIN_CIG_PER_DAY = 5;
+		private static int DEFAULT_MAX_CIG_PER_DAY = 20;
 		
 		private int minCigPerDay;
 		private int maxCigPerDay;
@@ -46,6 +46,7 @@ public class InitialUserDataActivity extends Activity {
 		TextView maxCigPerDayTextView;
 		
 		EditText monthMoneyLimitEditText;
+		EditText pricePerCigaretteEditText;
 		
 		SeekBar minCigPerDaySeekBar;
 		SeekBar maxCigPerDaySeekBar;
@@ -66,6 +67,7 @@ public class InitialUserDataActivity extends Activity {
 	        maxCigPerDayTextView = (TextView) findViewById(R.id.maxCigPerDayValue);
 	        
 	        monthMoneyLimitEditText = (EditText) findViewById(R.id.monthMoneyLimitEditText);
+	        pricePerCigaretteEditText = (EditText) findViewById(R.id.pricePerCigaretteEditText);
 	        
 	        minCigPerDaySeekBar = (SeekBar) findViewById(R.id.minCigPerDaySeekBar);
 	        maxCigPerDaySeekBar = (SeekBar) findViewById(R.id.maxCigPerDaySeekBar);
@@ -86,12 +88,27 @@ public class InitialUserDataActivity extends Activity {
 	     
 	        if(savedInstanceState == null){
 	        	
+	        	InitialUserData initialData = repository.getInitialData();
+	        	if(initialData != null){
+	        		minCigPerDay = initialData.getMinCigarettensPerDay();
+	        		maxCigPerDay = initialData.getMaxCigarettensPerDay();
+	        		Double monthLimit = initialData.getMonthMoneyLimit();
+	        		if(monthLimit != null){
+	        			monthMoneyLimitEditText.setText(Double.toString(monthLimit));
+	        		}
+	        		
+		        	pricePerCigaretteEditText.setText(Double.toString(initialData.getPricePerCigarette())); 
+	        	}
 	        	minCigPerDay = DEFAULT_MIN_CIG_PER_DAY;
 	        	maxCigPerDay = DEFAULT_MAX_CIG_PER_DAY;
+	        	
 	    	}
 	        else{
 	        	minCigPerDay = savedInstanceState.getInt("CURRENT_MIN_CIG_PER_DAY");
 	        	maxCigPerDay = savedInstanceState.getInt("CURRENT_MAX_CIG_PER_DAY");
+	        	monthMoneyLimitEditText.setText(savedInstanceState.getString("CURRENT_MONTH_LIMIT_TEXT"));
+	        	pricePerCigaretteEditText.setText(savedInstanceState.getString("CURRENT_CIGARETTE_PRICE_TEXT")); 
+	        	
 	        }
 	        minCigPerDaySeekBar.setProgress(minCigPerDay);
 	        maxCigPerDaySeekBar.setProgress(maxCigPerDay);
@@ -164,12 +181,16 @@ public class InitialUserDataActivity extends Activity {
 	    
 		protected void onSaveInstanceState(Bundle outState){
 	    		         
-	    	        super.onSaveInstanceState(outState);
-	    		         
-	    	        outState.putInt("CURRENT_MIN_CIG_PER_DAY", minCigPerDay);
-	    	        outState.putInt("CURRENT_MAX_CIG_PER_DAY", maxCigPerDay);
-	    		         
-	    	    }
+	        super.onSaveInstanceState(outState);
+		         
+	        outState.putInt("CURRENT_MIN_CIG_PER_DAY", minCigPerDay);
+	        outState.putInt("CURRENT_MAX_CIG_PER_DAY", maxCigPerDay);
+	        
+	        outState.putString("CURRENT_MONTH_LIMIT_TEXT", monthMoneyLimitEditText.getText().toString());
+	        outState.putString("CURRENT_CIGARETTE_PRICE_TEXT", pricePerCigaretteEditText.getText().toString());
+	        
+		         
+	    }
 		
 		private void saveInitialSettings(){
 			
@@ -197,8 +218,6 @@ public class InitialUserDataActivity extends Activity {
 				
 			}
 			
-			
-            	 EditText pricePerCigaretteEditText = (EditText) findViewById(R.id.pricePerCigaretteEditText);
             	 String pricePerCigarette = pricePerCigaretteEditText.getText().toString().trim();
 				
 					if(pricePerCigarette.length() > 0){

@@ -36,6 +36,11 @@ public class DailyReportActivity extends Fragment  {
 	
 	private  IRepository repository;
 	
+	
+	private DatePickerDialog dpdFromDate;
+	
+	private long loadedDate;
+	
 	public DailyReportActivity(){
 		this.repository = new TestRepository();
 	}
@@ -52,12 +57,9 @@ public class DailyReportActivity extends Fragment  {
             Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.daily_report, container, false);
     	
-       
 		stockTableScrollView = (TableLayout) view. findViewById(R.id.smokingActivityTableScrollView);
 
-		if(savedInstanceState != null){
-			
-		}
+		
 		
 		Bundle bundle = this.getArguments();
 		if(bundle != null){
@@ -72,7 +74,38 @@ public class DailyReportActivity extends Fragment  {
 	        }
 		}
 		else{
-			loadDatePickingProcess();
+			
+			
+			if(savedInstanceState != null){
+				long loadedDateInDatePicker = savedInstanceState.getLong("dialogOpenDate", 0);
+				
+				// in case the dialog was open the configuration was changed and then it was close
+				if(loadedDateInDatePicker != 0){
+					loadDialog(new Date(loadedDateInDatePicker));
+				}
+				
+				long loadedDateInTheView = savedInstanceState.getLong("loadedDate", 0);
+				
+				if(loadedDateInTheView != 0){
+					loadedDate = loadedDateInTheView;
+					loadActivities(new Date(loadedDate));
+				}
+				
+			}
+			Button pickDateBtn = (Button) view.findViewById(R.id.pickDayButton);
+			pickDateBtn.setVisibility(View.VISIBLE);
+			pickDateBtn.setOnClickListener(new OnClickListener(){
+				
+				
+				@Override
+				public void onClick(View arg0) {
+					loadDialog(new Date());
+					
+				}
+
+	        });
+			
+			
 		}
 		
 		return view;
@@ -81,6 +114,7 @@ public class DailyReportActivity extends Fragment  {
 	
 	private void loadActivities(Date date){
 		
+		this.loadedDate = date.getTime();
 		stockTableScrollView.removeAllViews();
 		
 		Calendar cal = Calendar.getInstance();
@@ -107,50 +141,33 @@ public class DailyReportActivity extends Fragment  {
 		loadSmokingData(currentYear, currentMonth, currentDay, activitiesCount, spendMoney);
     }
 	
-	
-	private void loadDatePickingProcess(){
-			
-			Button pickDateBtn = (Button) view.findViewById(R.id.pickDayButton);
-			pickDateBtn.setVisibility(View.VISIBLE);
-			pickDateBtn.setOnClickListener(new OnClickListener(){
-				Calendar c = Calendar.getInstance();
-				int mYear = c.get(Calendar.YEAR);
-				int mMonth = c.get(Calendar.MONTH);
-				int mDay = c.get(Calendar.DAY_OF_MONTH);
-				@Override
-				public void onClick(View arg0) {
-					
-					DatePickerDialog dpdFromDate = new DatePickerDialog(getActivity(), 
-							new DatePickerDialog.OnDateSetListener() {
-						   	    @Override
-						   	    public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
-						   	    	
-						   	    Calendar calendar =	Calendar.getInstance();
-						   	    calendar.set(selectedYear, selectedMonth, selectedDay, 0, 0);
+	private void loadDialog(Date date){
 		
-					   	    	loadActivities(calendar.getTime());
-					   	    	
-						   	    }}, mYear, mMonth, mDay);
-					
-					
-				        
-					dpdFromDate.getDatePicker().setMaxDate(c.getTimeInMillis());
-			        dpdFromDate.show();
-			
-				      dpdFromDate.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", 
-				    		  new DialogInterface.OnClickListener() {
-						          public void onClick(DialogInterface dialog, int which) {
-						             if (which == DialogInterface.BUTTON_NEGATIVE) {
-						                  
-						             }
-						          	} 
-				          });
-				}
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		int mYear = c.get(Calendar.YEAR);
+		int mMonth = c.get(Calendar.MONTH);
+		int mDay = c.get(Calendar.DAY_OF_MONTH);
+		
+		dpdFromDate = new DatePickerDialog(getActivity(), 
+				new DatePickerDialog.OnDateSetListener() {
+			   	    @Override
+			   	    public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+			   	    	
+				   	    Calendar calendar =	Calendar.getInstance();
+				   	    calendar.set(selectedYear, selectedMonth, selectedDay, 0, 0);
+				   	    
+			   	    	loadActivities(calendar.getTime());
+			   	    	dpdFromDate = null;
+		   	    	
+			   	    }
+		}, mYear, mMonth, mDay);
 
-	        });
-	       
-	    }
-
+		dpdFromDate.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
+        dpdFromDate.show();
+        
+	}
+	
 	private void insertStockInScrollView(SmokingActivity activity, int arrayIndex){
 		
 		
@@ -210,7 +227,7 @@ public class DailyReportActivity extends Fragment  {
 			}
 			
 			dataContainer.setText(String.format("%s/%s/%s ciggarette(s) %s.%s %s.%s Spent money %.2g%n", 
-					selectedDay, selectedMonth + 1, selectedYear,
+					selectedDay, selectedMonth, selectedYear,
 					cigarettesCount, System.getProperty("line.separator"),
 					status, System.getProperty("line.separator"), spendMoney));
 			
@@ -250,5 +267,24 @@ public class DailyReportActivity extends Fragment  {
 		
 	};
 	
-	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+	  super.onSaveInstanceState(savedInstanceState);
+	  if(dpdFromDate != null){
+		  Calendar cal = Calendar.getInstance();
+		  int selectedYear = dpdFromDate.getDatePicker().getYear();
+		  int selectedMonth = dpdFromDate.getDatePicker().getMonth();
+		  int selectedDay = dpdFromDate.getDatePicker().getDayOfMonth();
+		  cal.set(selectedYear, selectedMonth, selectedDay);
+		  
+		  savedInstanceState.putLong("dialogOpenDate", cal.getTimeInMillis());
+	  }
+	  
+	  if(loadedDate != 0){
+		  
+		  savedInstanceState.putLong("loadedDate", loadedDate);
+	  }
+	  
+	}
+
 }

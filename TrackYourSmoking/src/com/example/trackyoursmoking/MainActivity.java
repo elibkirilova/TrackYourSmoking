@@ -3,14 +3,12 @@ package com.example.trackyoursmoking;
 import java.util.Calendar;
 import java.util.List;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
@@ -18,7 +16,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.drawable.AnimationDrawable;
 
 import android.support.v4.app.FragmentActivity;
@@ -33,9 +30,12 @@ import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity  {
 	
-private  IRepository repository;
-	
+	private  IRepository repository;
 
+ 	private String currentState;
+ 	
+ 	private boolean isDialogOpen;
+ 	private ProgressDialog ringProgressDialog;
 
 	public MainActivity(){
 		this.repository = new TestRepository();
@@ -45,11 +45,11 @@ private  IRepository repository;
 		this.repository = repository;
 	}
 	
-	Button addCigaretteButton;
-	AnimationDrawable frameAnimation;
-	ImageView img;
+		Button addCigaretteButton;
+		AnimationDrawable frameAnimation;
+		ImageView img;
 	@Override
-    protected void onCreate(Bundle savedInstanceState) {
+    	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -127,7 +127,7 @@ private  IRepository repository;
 	
 	
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    	public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
        // getMenuInflater().inflate(R.menu.main, menu);
        // return true;
@@ -142,35 +142,35 @@ private  IRepository repository;
 	    .setContentText("this app settings -> allow hangin")
 	    .setAutoCancel(false);
 
-Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
-
-
-
-// The stack builder object will contain an artificial back stack for the
-// started Activity.
-// This ensures that navigating backward from the Activity leads out of
-// your application to the Home screen.
- TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-// Adds the back stack for the Intent (but not the Intent itself)
-  stackBuilder.addParentStack(InitialUserDataActivity.class);
-// Adds the Intent that starts the Activity to the top of the stack
-  stackBuilder.addNextIntent(resultIntent);
-  PendingIntent resultPendingIntent =
-        stackBuilder.getPendingIntent(
-           0,
-         PendingIntent.FLAG_UPDATE_CURRENT
-     );
- mBuilder.setContentIntent(resultPendingIntent);
- NotificationManager mNotificationManager =
- (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-// mId allows you to update the notification later on.
-  mNotificationManager.notify(12, mBuilder.build());
-
-        
-        return true;
-    }
+		Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
+		
+		
+		
+		// The stack builder object will contain an artificial back stack for the
+		// started Activity.
+		// This ensures that navigating backward from the Activity leads out of
+		// your application to the Home screen.
+		 TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+		// Adds the back stack for the Intent (but not the Intent itself)
+		  stackBuilder.addParentStack(InitialUserDataActivity.class);
+		// Adds the Intent that starts the Activity to the top of the stack
+		  stackBuilder.addNextIntent(resultIntent);
+		  PendingIntent resultPendingIntent =
+		        stackBuilder.getPendingIntent(
+		           0,
+		         PendingIntent.FLAG_UPDATE_CURRENT
+		     );
+		 mBuilder.setContentIntent(resultPendingIntent);
+		 NotificationManager mNotificationManager =
+		 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		// mId allows you to update the notification later on.
+		  mNotificationManager.notify(12, mBuilder.build());
+			
+			        
+	        return true;
+	    }
     
-	    public boolean onOptionsItemSelected(MenuItem item) {
+    	public boolean onOptionsItemSelected(MenuItem item) {
 	    	switch (item.getItemId()) {
 	        case R.id.action_settings:
 	        startActivity(new Intent(getApplication(), UserSettingActivity.class));
@@ -181,28 +181,70 @@ Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
 		        startActivity(new Intent(getApplication(), ReportingActivity.class));
 		       
 		        return true;
-        	default:
-        	return super.onOptionsItemSelected(item);
+	    	default:
+	    	return super.onOptionsItemSelected(item);
 	    	}
-	    }
-    private void reuestAddCigarette(){
+    	}
+    
+    	private void reuestAddCigarette(){
 
-		 new AlertDialog.Builder(this)
-		 	.setTitle("Smoked another one?")
-     	    .setMessage("One cigarette will be added to your daily amount.")
-     	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-     	        public void onClick(DialogInterface dialog, int which) { 
-     	           repository.addCigaretteToday();
-     	           updateScreen();
-     	        }
-     	     })
-     	     .setNegativeButton("No",new DialogInterface.OnClickListener() {
-	     	        public void onClick(DialogInterface dialog, int which) { 
-	     	           
-	     	        }
-	     	     })
-     	     .show();
-	}
+
+	    	String msg = "";
+	    	String title = "";
+	    	boolean showAlert = false;
+	    	
+	    	if(this.currentState == SmokingStates.REACHED_MAXIMUM_SMOKE_STATE){
+	    		msg =  "Are you sure? I've already reached your daily limit...";
+	    		title = "Reached daily limit";
+	    		showAlert = true;
+	    	}
+	    	else if(this.currentState == SmokingStates.ABOVE_LIMIT_SMOKE_STATE){
+	    		msg =  "Are you sure? Man, you smoke a lot...";
+	    		title = "ABOVE DAILY LIMIT";
+	    		showAlert = true;
+	    	}
+	    	
+	    	if(showAlert){
+				 new AlertDialog.Builder(this)
+				 	.setTitle(title)
+		     	    .setMessage(msg)
+		     	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		     	        public void onClick(DialogInterface dialog, int which) { 
+		     	           repository.addCigaretteToday();
+		     	           updateScreen();
+		     	          isDialogOpen = false;
+		     	        }
+		     	     })
+		     	     .setNegativeButton("No",new DialogInterface.OnClickListener() {
+			     	        public void onClick(DialogInterface dialog, int which) { 
+			     	        	isDialogOpen = false;
+			     	        }
+			     	     })
+		     	     .show();
+				 isDialogOpen = true;
+	    	}
+	    	else{
+	    		ringProgressDialog = ProgressDialog.show(MainActivity.this, "Please wait ...",	"Adding cigarette to your daily amount...", true);
+	    		ringProgressDialog.setCancelable(true);
+	    		new Thread(new Runnable() {
+	    			@Override
+	    			public void run() {
+	    					try {
+								Thread.sleep(3000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+	    				
+	    				ringProgressDialog.dismiss();
+	    				ringProgressDialog = null;
+	    				
+	    			}
+	    		}).start();
+	    		repository.addCigaretteToday();
+	    		updateScreen();
+	    	}
+		}
 
 		private InitialUserData getInitialData() {
 			
@@ -258,7 +300,7 @@ Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
 	        frameAnimation.start();
 		}	
 		
-	private void loadSmokingData(int selectedYear, int selectedMonth, int selectedDay, int cigarettesCount, double spendMoney){
+		private void loadSmokingData(int selectedYear, int selectedMonth, int selectedDay, int cigarettesCount, double spendMoney){
 					
 				
 				TextView dataContainer = (TextView)findViewById(R.id.dailyDataTextView);
@@ -270,6 +312,7 @@ Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
 				if(cigarettesCount == 0){
 					status = SmokingStates.NO_SMOKE_STATE;
 					img.setBackgroundResource(R.drawable.animation_no_smoking);
+					
 				}
 				else if(cigarettesCount < minimum){
 					status = SmokingStates.UNDER_MINIMUM_SMOKE_STATE;
@@ -278,11 +321,11 @@ Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
 				}
 				else if(cigarettesCount == maximum){
 					status = SmokingStates.REACHED_MAXIMUM_SMOKE_STATE;
-					img.setBackgroundResource(R.drawable.animation_under_minimum_smoking);
+					img.setBackgroundResource(R.drawable.animation_average_smoking);
 				}
 				else if(cigarettesCount == minimum){
 					status = SmokingStates.REACHED_MINIMUM_SMOKE_STATE;
-					img.setBackgroundResource(R.drawable.animation_under_minimum_smoking);
+					img.setBackgroundResource(R.drawable.animation_average_smoking);
 				}
 				else if(cigarettesCount > maximum){
 					status = SmokingStates.ABOVE_LIMIT_SMOKE_STATE;
@@ -290,8 +333,10 @@ Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
 				}
 				else if(cigarettesCount < maximum){
 					status = SmokingStates.AVERAGE_SMOKE_STATE;
-					img.setBackgroundResource(R.drawable.animation_under_minimum_smoking);
+					img.setBackgroundResource(R.drawable.animation_average_smoking);
 				}
+				
+				currentState = status;
 				
 				dataContainer.setText(String.format("%s/%s/%s ciggarette(s) %s.%s %s.%s Spent money %.2g%n", 
 						selectedDay, selectedMonth + 1, selectedYear,
@@ -299,5 +344,27 @@ Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
 						status, System.getProperty("line.separator"), spendMoney));
 				
 			}
+	
+		@Override
+		public void onSaveInstanceState(Bundle savedInstanceState) {
+		  super.onSaveInstanceState(savedInstanceState);
+		  if(isDialogOpen){
+			  savedInstanceState.putBoolean("dialogOpen", true);
+		  }
+		  
+		  if(ringProgressDialog != null){
+			  ringProgressDialog.dismiss();
+		  }
+		}
+		
+		@Override
+		public void onRestoreInstanceState(Bundle savedInstanceState) {
+		  super.onRestoreInstanceState(savedInstanceState);
+		 
+		  boolean dialogOpen = savedInstanceState.getBoolean("dialogOpen", false);
+		  if(dialogOpen){
+			  reuestAddCigarette();
+		  }
+		}
 	}
 
