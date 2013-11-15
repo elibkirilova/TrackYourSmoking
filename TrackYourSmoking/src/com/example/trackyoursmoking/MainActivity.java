@@ -1,5 +1,6 @@
 package com.example.trackyoursmoking;
 
+import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.List;
 
@@ -48,6 +49,7 @@ public class MainActivity extends FragmentActivity  {
 		Button addCigaretteButton;
 		AnimationDrawable frameAnimation;
 		ImageView img;
+		
 	@Override
     	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -338,8 +340,8 @@ public class MainActivity extends FragmentActivity  {
 				
 				currentState = status;
 				
-				dataContainer.setText(String.format("%s/%s/%s ciggarette(s) %s.%s %s.%s Spent money %.2g%n", 
-						selectedDay, selectedMonth + 1, selectedYear,
+				dataContainer.setText(String.format("%s-%s-%s ciggarette(s) %s.%s %s.%s Spent money %.2g%n", 
+						selectedDay,  new DateFormatSymbols().getMonths()[selectedMonth], selectedYear,
 						cigarettesCount, System.getProperty("line.separator"),
 						status, System.getProperty("line.separator"), spendMoney));
 				

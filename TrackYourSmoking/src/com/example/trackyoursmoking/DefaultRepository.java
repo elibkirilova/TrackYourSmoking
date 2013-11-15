@@ -1,5 +1,6 @@
 package com.example.trackyoursmoking;
 
+import java.util.Date;
 import java.util.List;
 
 public class DefaultRepository implements IRepository {
@@ -48,6 +49,22 @@ public class DefaultRepository implements IRepository {
 	public void removeActivity(int activityId) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public PeriodReport getCigarettesPerDatesPeriod(int yearFrom, int yearTo,
+			int monthFrom, int monthTo, int dayFrom, int dayTo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PeriodReport getCigarettesPerAndTimePeriod(int yearFrom, int yearTo,
+			int monthFrom, int monthTo, int dayFRom, int dayTo, int hourFrom,
+			int hourTo, int minutesFrom, int minutesTo,
+			List<Integer> includedDaysOfTheWeek) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

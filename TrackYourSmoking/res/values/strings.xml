@@ -35,10 +35,16 @@
      <string name="get_report_btn">Show report</string>
      
       <string name="delete_smoking_activity_btn">Delete</string>
+     
+      <string name="pick_date_btn">Pick date</string>
       
-       <string name="pick_date_btn">Pick date</string>
-       
-       <string name="time_of_smoking_col_title">Time of smoking</string>
-       <string name="price_of_smoking_col_title">Price of smoking</string>
-       <string name="delete_of_smoking_col_title">Remove it</string>
+      <string name="time_of_smoking_col_title">Time of smoking</string>
+      <string name="price_of_smoking_col_title">Price of smoking</string>
+      <string name="delete_of_smoking_col_title">Remove it</string>
+      
+      <string name="set_date_hint">Set date</string>
+      <string name="set_time_hint">Set time</string>
+      
+      <string name="switch_calendar_on">Hide calendar</string>
+      <string name="switch_calendar_off">Show calendar</string>
 </resources>

@@ -11,6 +11,17 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
+    
+      <TextView
+            android:id="@+id/reportTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignParentTop="true"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true" 
+            android:gravity="center_horizontal"/>
+    
     <TextView
         android:id="@+id/dateFromtextView"
         android:layout_width="wrap_content"
@@ -124,6 +135,15 @@
          android:layout_below="@+id/excludeDayButton"
          android:layout_marginTop="18dp"
          android:text="@string/get_report_btn" />
+
+     <Switch
+         android:id="@+id/calendarDateAndTimeReportSwitch"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/excludeDayButton"
+         android:layout_below="@+id/excludeDayButton"
+         android:textOff="@string/switch_calendar_off"
+         android:textOn="@string/switch_calendar_on" />
 
 </RelativeLayout>
 

@@ -1,5 +1,6 @@
 package com.example.trackyoursmoking;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
@@ -26,31 +27,45 @@ public class ReportingActivity extends FragmentActivity {
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
+        Calendar calendar = Calendar.getInstance();
         
         Bundle dataTodayTab = new Bundle();
         dataTodayTab.putLong("date", new Date().getTime());
 
+        Bundle lastWeekTab = new Bundle();
+        Bundle lastMonth = new Bundle();
+        
+        lastWeekTab.putLong("dateTo", calendar.getTimeInMillis());
+        lastMonth.putLong("dateTo", calendar.getTimeInMillis());
+        
+        calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -7);
+        lastWeekTab.putLong("dateFrom", calendar.getTimeInMillis());
+
+        calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, -1);
+        lastMonth.putLong("dateFrom", calendar.getTimeInMillis());
         
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab1").setIndicator("today",
                         getResources().getDrawable(R.drawable.reporting_icon)),
-                DailyReportActivity.class,dataTodayTab);
+                DailyReport.class,dataTodayTab);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab2").setIndicator("last week",
                 		  getResources().getDrawable(R.drawable.reporting_icon)),
-                          ReportForDatesPeriod.class, null);
+                          ReportForDatesPeriod.class, lastWeekTab);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab3").setIndicator("last month",
                 		  getResources().getDrawable(R.drawable.reporting_icon)),
-                          DailyReportActivity.class, null);
+                		  ReportForDatesPeriod.class, lastMonth);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab4").setIndicator("for specified day",
                 		  getResources().getDrawable(R.drawable.reporting_icon)),
-                          DailyReportActivity.class, null);
+                          DailyReport.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab5").setIndicator("for specified period",
                 		  getResources().getDrawable(R.drawable.reporting_icon)),
-                          DailyReportActivity.class, null);
+                		  ReportForDatesPeriod.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab6").setIndicator("for specified days and time period",
                 		  getResources().getDrawable(R.drawable.reporting_icon)),

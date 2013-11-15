@@ -1,5 +1,6 @@
 package com.example.trackyoursmoking;
 
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -30,7 +31,7 @@ import android.widget.TextView;
 
 
 
-public class DailyReportActivity extends Fragment  {
+public class DailyReport extends Fragment  {
 	
 	public final static String STOCK_SYMBOL = "com.example.myfirstapp.STOCK";
 	
@@ -41,7 +42,7 @@ public class DailyReportActivity extends Fragment  {
 	
 	private long loadedDate;
 	
-	public DailyReportActivity(){
+	public DailyReport(){
 		this.repository = new TestRepository();
 	}
 	
@@ -67,13 +68,11 @@ public class DailyReportActivity extends Fragment  {
 	        if(date != 0){
 	        	
 	        	loadActivities(new Date(date));
+	        	return view;
 	        }
-	        else{
-	        	
-	        	throw new IllegalArgumentException("Bundle does not contain 'date'.");
-	        }
+	        
 		}
-		else{
+		
 			
 			
 			if(savedInstanceState != null){
@@ -106,7 +105,7 @@ public class DailyReportActivity extends Fragment  {
 	        });
 			
 			
-		}
+		
 		
 		return view;
 	}
@@ -122,7 +121,7 @@ public class DailyReportActivity extends Fragment  {
 		
 		int currentYear = cal.get(Calendar.YEAR);
 
-		int currentMonth = cal.get(Calendar.MONTH ) ;
+		int currentMonth = cal.get(Calendar.MONTH) ;
 		
 		int currentDay = cal.get(Calendar.DATE);
 		
@@ -226,8 +225,8 @@ public class DailyReportActivity extends Fragment  {
 				status = SmokingStates.AVERAGE_SMOKE_STATE;
 			}
 			
-			dataContainer.setText(String.format("%s/%s/%s ciggarette(s) %s.%s %s.%s Spent money %.2g%n", 
-					selectedDay, selectedMonth, selectedYear,
+			dataContainer.setText(String.format("%s-%s-%s ciggarette(s) %s.%s %s.%s Spent money %.2g%n", 
+					selectedDay, new DateFormatSymbols().getMonths()[selectedMonth], selectedYear,
 					cigarettesCount, System.getProperty("line.separator"),
 					status, System.getProperty("line.separator"), spendMoney));
 			

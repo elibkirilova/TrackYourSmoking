@@ -198,24 +198,24 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int under_minimum_smoke4=0x7f02008e;
     }
     public static final class id {
-        public static final int action_reporting=0x7f0b0031;
-        public static final int action_settings=0x7f0b0030;
+        public static final int action_reporting=0x7f0b0033;
+        public static final int action_settings=0x7f0b0032;
         public static final int activityIdTextView=0x7f0b0005;
         public static final int activityPriceTextView=0x7f0b0007;
         public static final int activityTimeTextView=0x7f0b0006;
         public static final int addCigaretteButton=0x7f0b0000;
-        public static final int btnsFromToDateLinearLayout=0x7f0b0022;
+        public static final int btnsFromToDateLinearLayout=0x7f0b0023;
+        public static final int calendarDateAndTimeReportSwitch=0x7f0b002d;
+        public static final int calendarDatePicker=0x7f0b002f;
         public static final int dailyDataTextView=0x7f0b0001;
         public static final int dateAndCigarettesCountTextView=0x7f0b000d;
-        public static final int dateFromTextView=0x7f0b002f;
-        public static final int dateFromtextView=0x7f0b0020;
-        public static final int dateToTextView=0x7f0b0021;
-        public static final int datesIntervalDatePicker=0x7f0b002e;
+        public static final int dateFromTextView=0x7f0b0030;
+        public static final int dateFromtextView=0x7f0b0021;
+        public static final int dateToTextView=0x7f0b0022;
         public static final int deleteActivitybutton=0x7f0b0008;
-        public static final int excludeDayButton=0x7f0b002a;
-        public static final int fromDateButton=0x7f0b0023;
-        public static final int linearLayout2=0x7f0b0027;
-        public static final int mainScreenScrollView=0x7f0b001a;
+        public static final int excludeDayButton=0x7f0b002b;
+        public static final int fromDateButton=0x7f0b0024;
+        public static final int linearLayout2=0x7f0b0028;
         public static final int maxCigPerDaySeekBar=0x7f0b0018;
         public static final int maxCigPerDayTextView=0x7f0b0016;
         public static final int maxCigPerDayValue=0x7f0b0017;
@@ -228,12 +228,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int pickDayButton=0x7f0b000b;
         public static final int pricePerCigaretteEditText=0x7f0b001b;
         public static final int pricePerCigaretteTextView=0x7f0b0019;
-        public static final int realtabcontent=0x7f0b002c;
+        public static final int realtabcontent=0x7f0b0031;
         public static final int reportPerDateAndTimeScrollView=0x7f0b001f;
-        public static final int repotForDatesPeriodLayout=0x7f0b002d;
+        public static final int reportTextView=0x7f0b0020;
+        public static final int reportsForDatesPeriodScrollView=0x7f0b001a;
         public static final int saveSettingsButton=0x7f0b001d;
-        public static final int showReportDateAndTimeButton=0x7f0b002b;
-        public static final int showReportDateButton=0x7f0b0028;
+        public static final int showReportDateAndTimeButton=0x7f0b002c;
+        public static final int showReportDateButton=0x7f0b0029;
         public static final int smokingActivityRow=0x7f0b0004;
         public static final int smokingActivityScrollView=0x7f0b0011;
         public static final int smokingActivityTableScrollView=0x7f0b0012;
@@ -244,10 +245,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tableRow0=0x7f0b000c;
         public static final int tableRow1=0x7f0b000e;
         public static final int tableRow2=0x7f0b0010;
-        public static final int textView5=0x7f0b0025;
-        public static final int textView6=0x7f0b0026;
-        public static final int timeToButton=0x7f0b0029;
-        public static final int toDateButton=0x7f0b0024;
+        public static final int textView5=0x7f0b0026;
+        public static final int textView6=0x7f0b0027;
+        public static final int timeToButton=0x7f0b002a;
+        public static final int toDateButton=0x7f0b0025;
+        public static final int userInputRelativeLayout=0x7f0b002e;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -256,8 +258,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int gif_container=0x7f030003;
         public static final int initial_settings=0x7f030004;
         public static final int report_for_dates_and_time_period=0x7f030005;
-        public static final int reporting=0x7f030006;
-        public static final int repot_for_dates_period=0x7f030007;
+        public static final int report_for_dates_period=0x7f030006;
+        public static final int reporting=0x7f030007;
         public static final int tab_indicator_holo=0x7f030008;
     }
     public static final class menu {
@@ -287,9 +289,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int price_of_smoking_col_title=0x7f080018;
         public static final int price_per_cigarette=0x7f080006;
         public static final int save_settings=0x7f080009;
+        public static final int set_date_hint=0x7f08001a;
+        public static final int set_time_hint=0x7f08001b;
         public static final int smoked_cigarettes=0x7f080013;
         public static final int smoking_activities_list_title=0x7f08000d;
         public static final int smoking_state=0x7f08000c;
+        public static final int switch_calendar_off=0x7f08001d;
+        public static final int switch_calendar_on=0x7f08001c;
         public static final int time_from_btn=0x7f080010;
         public static final int time_of_smoking_col_title=0x7f080017;
         public static final int time_to_btn=0x7f080011;
