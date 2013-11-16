@@ -1,7 +1,6 @@
 package com.example.trackyoursmoking;
 
 import android.content.Context;
-import android.content.Intent;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.util.AttributeSet;
@@ -23,9 +22,7 @@ public class InitialSettingsScreenPreference extends Preference implements OnPre
 	    }
 
 	    public boolean onPreferenceClick(Preference preference) {
-	        
-	    	
-	    	
+
 	        return true;
 	    }
 

@@ -79,10 +79,8 @@ public class SmokingActivity implements Comparable<SmokingActivity> {
 
 		    DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
-			 // Get the date today using Calendar object.
 			 Date today = Calendar.getInstance().getTime();        
-			 // Using DateFormat format method we can create a string 
-			 // representation of a date with the defined format.
+			
 			 String reportDate = df.format(this.getDateAndTime());
 
 		    result.append(reportDate);

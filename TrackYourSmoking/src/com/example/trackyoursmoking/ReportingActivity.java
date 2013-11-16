@@ -3,22 +3,18 @@ package com.example.trackyoursmoking;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.TabHost;
 import android.widget.TabWidget;
-import android.widget.TextView;
 
 public class ReportingActivity extends FragmentActivity {
     private FragmentTabHost mTabHost;
 
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +22,7 @@ public class ReportingActivity extends FragmentActivity {
         setContentView(R.layout.reporting);
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-
+      
         Calendar calendar = Calendar.getInstance();
         
         Bundle dataTodayTab = new Bundle();
@@ -82,4 +78,6 @@ public class ReportingActivity extends FragmentActivity {
         hs.addView(tw);
         hs.setHorizontalScrollBarEnabled(false);
     }
+    
+  
 }

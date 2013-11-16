@@ -1,21 +1,18 @@
 package com.example.trackyoursmoking;
 
 import java.text.DateFormatSymbols;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.provider.ContactsContract.Contacts.Data;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
@@ -26,15 +23,11 @@ import android.widget.RelativeLayout;
 public class ReportForDatesPeriod extends Fragment {
 
 	private  IRepository repository;
-	
-	
-	
-	boolean isloadedReport;
-	
+
 	long selectedDateFrom;
 	long selectedDateTo;
 	
-	private DatePicker datePicker;
+	private CalendarView datePicker;
 	
 	private Switch calendarSwitch;
 	
@@ -51,8 +44,10 @@ public class ReportForDatesPeriod extends Fragment {
 	
 	private TextView reportTextView; 
 	
-	public ReportForDatesPeriod(){
-		this.repository = new TestRepository();
+	@Override
+	public void onAttach(Activity activity) {
+	    super.onAttach(activity);
+	    this.repository = new TestRepository(activity.getApplication());
 	}
 	
 	@Override
@@ -61,6 +56,28 @@ public class ReportForDatesPeriod extends Fragment {
         View v = inflater.inflate(R.layout.report_for_dates_period, container, false);
     
         reportTextView = (TextView) v.findViewById(R.id.reportTextView);
+        
+		datePicker = (CalendarView) v.findViewById(R.id.calendarDatePicker);
+				
+				
+				calendarSwitch = (Switch) v.findViewById(R.id.calendarDateAndTimeReportSwitch);
+				
+				calendarSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						
+						if(isChecked){
+							datePicker.setVisibility(View.VISIBLE);
+						}
+						else{
+							datePicker.setVisibility(View.GONE);
+						}
+						
+					}       
+					
+				});
+        
         
         Bundle bundle = this.getArguments();
         if(bundle != null){
@@ -88,25 +105,7 @@ public class ReportForDatesPeriod extends Fragment {
 		RelativeLayout pickingIntervalLayout = (RelativeLayout)v.findViewById(R.id.userInputRelativeLayout);
 		pickingIntervalLayout.setVisibility(View.VISIBLE);
 
-		datePicker = (DatePicker) v.findViewById(R.id.calendarDatePicker);
-    	
-		calendarSwitch = (Switch) v.findViewById(R.id.calendarDateAndTimeReportSwitch);
 		
-		calendarSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				
-				if(isChecked){
-					datePicker.setVisibility(View.VISIBLE);
-				}
-				else{
-					datePicker.setVisibility(View.GONE);
-				}
-				
-			}       
-			
-		});
 		
 		dateFromTextView = (TextView) v.findViewById(R.id.dateFromTextView);
 		dateToTextView = (TextView) v.findViewById(R.id.dateToTextView);
@@ -155,7 +154,7 @@ public class ReportForDatesPeriod extends Fragment {
 	private void loadFromSavedInstance(Bundle savedInstanceState){
 		Calendar clendar = Calendar.getInstance();
 		
-		 selectedDateFrom = savedInstanceState.getLong("selectedDateFrom", 0);
+		 selectedDateFrom = savedInstanceState.getLong("selectedDateFromReportForDatesPeriod", 0);
 	
 		 if(selectedDateFrom != 0){
 			
@@ -164,7 +163,7 @@ public class ReportForDatesPeriod extends Fragment {
 			 this.updateDateFrom(clendar.get(Calendar.YEAR), clendar.get(Calendar.MONTH), clendar.get(Calendar.DATE));
 		  }
 		 
-		 selectedDateTo = savedInstanceState.getLong("selectedDateTo", 0);
+		 selectedDateTo = savedInstanceState.getLong("selectedDateToReportForDatesPeriod", 0);
 		 
 		  if(selectedDateTo != 0){
 			  
@@ -173,27 +172,27 @@ public class ReportForDatesPeriod extends Fragment {
 			  this.updateDateTo(clendar.get(Calendar.YEAR), clendar.get(Calendar.MONTH), clendar.get(Calendar.DATE));
 		  }
 		
-		  isloadedReport = savedInstanceState.getBoolean("loadedReport", false);
-		  
-		  if(isloadedReport){
+		 
+		  if(savedInstanceState.getBoolean("loadedReportReportForDatesPeriod", false)){
 			  
 			  this.loadReport(selectedDateFrom, selectedDateTo);
 		  }
 		  
 		
 		  
-		  long dialogOpenDateDateFrom = savedInstanceState.getLong("dialogOpenDateDateFrom", 0);
+		  long dialogOpenDateDateFrom = savedInstanceState.getLong("dialogOpenDateDateFromReportForDatesPeriod", 0);
 			
 			 if(dialogOpenDateDateFrom != 0){
-				  // set date
-				  this.setPickingDateFrom();
+				 clendar.setTimeInMillis(dialogOpenDateDateFrom);
+
+				 this.openDateFromDialog(clendar);
 			  }
 			
-			 long dialogOpenDateDateTo = savedInstanceState.getLong("dialogOpenDateDateTo", 0);
+			 long dialogOpenDateDateTo = savedInstanceState.getLong("dialogOpenDateDateToReportForDatesPeriod", 0);
 			 
 			 if(dialogOpenDateDateTo != 0){
-				 // set date
-				  this.setPickingDateTo();
+				 clendar.setTimeInMillis(dialogOpenDateDateTo);
+				 this.openDateToDialog(clendar);
 			  }
 				
 		
@@ -266,7 +265,18 @@ public class ReportForDatesPeriod extends Fragment {
        		
       	 }
     	
-    	dpdFromDate = new DatePickerDialog(getActivity(), 
+    	openDateFromDialog(clendar);
+
+		
+	
+    }
+    
+    
+ private void openDateFromDialog(Calendar clendar){
+    	
+    	
+    	
+	 dpdFromDate = new DatePickerDialog(getActivity(), 
 				new DatePickerDialog.OnDateSetListener() {
 			   	    @Override
 			   	    public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
@@ -275,13 +285,14 @@ public class ReportForDatesPeriod extends Fragment {
 				   	    calendar.set(selectedYear, selectedMonth, selectedDay, 0, 0);
 				   	    
 				   	    updateDateFrom(selectedYear, selectedMonth, selectedDay);
-			   	    	dpdFromDate = null;
+				   	 dpdFromDate = null;
 		   	    	
 			   	    }
 		}, clendar.get(Calendar.YEAR), clendar.get(Calendar.MONTH), clendar.get(Calendar.DATE));
 
-		
-		
+    	dpdFromDate.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
+
+    	
 		if(selectedDateTo != 0){
     		dpdFromDate.getDatePicker().setMaxDate(selectedDateTo);
     	}
@@ -291,7 +302,7 @@ public class ReportForDatesPeriod extends Fragment {
     	
         dpdFromDate.show();
     	
-    }
+   }
     
     private void setPickingDateTo(){
     	
@@ -302,6 +313,13 @@ public class ReportForDatesPeriod extends Fragment {
     		clendar.setTimeInMillis(selectedDateTo);
        		
       	 }
+    	
+    	openDateToDialog(clendar);
+   }
+    
+private void openDateToDialog(Calendar clendar){
+    	
+    	
     	
     	dpdToDate = new DatePickerDialog(getActivity(), 
 				new DatePickerDialog.OnDateSetListener() {
@@ -356,7 +374,7 @@ public class ReportForDatesPeriod extends Fragment {
 			  int selectedDay = dpdFromDate.getDatePicker().getDayOfMonth();
 			  cal.set(selectedYear, selectedMonth, selectedDay);
 			  
-			  savedInstanceState.putLong("dialogOpenDateDateFrom", cal.getTimeInMillis());
+			  savedInstanceState.putLong("dialogOpenDateDateFromReportForDatesPeriod", cal.getTimeInMillis());
 		  }
 		  
 		  if(dpdToDate != null){
@@ -366,22 +384,24 @@ public class ReportForDatesPeriod extends Fragment {
 			  int selectedDay = dpdToDate.getDatePicker().getDayOfMonth();
 			  cal.set(selectedYear, selectedMonth, selectedDay);
 			  
-			  savedInstanceState.putLong("dialogOpenDateDateTo", cal.getTimeInMillis());
+			  savedInstanceState.putLong("dialogOpenDateDateToReportForDatesPeriod", cal.getTimeInMillis());
 		  }
 		  
 		  if(selectedDateFrom != 0){
 			  
-			  savedInstanceState.putLong("selectedDateFrom", selectedDateFrom);
+			  savedInstanceState.putLong("selectedDateFromReportForDatesPeriod", selectedDateFrom);
 		  }
 		  
 		  if(selectedDateTo != 0){
 			  
-			  savedInstanceState.putLong("selectedDateTo", selectedDateTo);
+			  savedInstanceState.putLong("selectedDateToReportForDatesPeriod", selectedDateTo);
 		  }
 		  
-		  if(isloadedReport){
+		  
+		  if(this.reportTextView != null && this.reportTextView.getText().toString().trim().length() > 0){
 			  
-			  savedInstanceState.putBoolean("loadedReport", isloadedReport);
+			  savedInstanceState.putBoolean("loadedReportReportForDatesPeriod", true);
 		  }
-		}
+		  }
+		
 	}

@@ -1,15 +1,9 @@
 package com.example.trackyoursmoking;
 
 import android.os.Bundle;
-import android.preference.Preference;
+
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.NumberPicker;
-import android.app.Activity;
-import android.app.Fragment;
- 
+
 public class UserSettingActivity extends PreferenceActivity   {
  
     @SuppressWarnings("deprecation")
@@ -23,6 +17,5 @@ public class UserSettingActivity extends PreferenceActivity   {
         addPreferencesFromResource(R.xml.settings);
         
     }
-    
-    
+
 }

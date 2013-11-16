@@ -8,15 +8,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestRepository implements IRepository {
+import android.app.Application;
+
+public class TestRepository extends BaseRepository {
+
+	public TestRepository(Application aplication) {
+		super(aplication);
+		// TODO Auto-generated constructor stub
+	}
 
 	private static InitialUserData initialData = new InitialUserData();
 	
-	
-	
 	private static List<SmokingActivity> cigarettesSmoked = new ArrayList<SmokingActivity>();
-	
-	
+
 	public List<SmokingActivity> getCigarettesSmokedToday() {
 		
 		
@@ -227,7 +231,7 @@ public class TestRepository implements IRepository {
 				
 				int currentHour = cal.get(Calendar.HOUR_OF_DAY);
 				
-				int currentMinutes = cal.get(Calendar.DATE);
+				int currentMinutes = cal.get(Calendar.MINUTE);
 				
 				Integer currentDayOfTheWeek = cal.get(Calendar.DAY_OF_WEEK);
 				

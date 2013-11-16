@@ -1,28 +1,27 @@
 package com.example.trackyoursmoking;
 
-import java.util.Date;
 import java.util.List;
 
 public interface IRepository {
 
-	int getCigarettesSmokedTodayCount();
+	abstract int getCigarettesSmokedTodayCount();
 	
-	List<SmokingActivity> getCigarettesSmokedToday();
+	abstract List<SmokingActivity> getCigarettesSmokedToday();
 	
-	SmokingActivity addCigaretteToday();
+	abstract SmokingActivity addCigaretteToday();
 	
-	List<SmokingActivity> takeCigarettesForGivenDay(int year, int month, int day);
+	abstract List<SmokingActivity> takeCigarettesForGivenDay(int year, int month, int day);
 	
-	PeriodReport getCigarettesPerDatesPeriod
+	abstract PeriodReport getCigarettesPerDatesPeriod
 	(int yearFrom, int yearTo, int monthFrom, int monthTo, int dayFrom, int dayTo);
 	
-	PeriodReport getCigarettesPerAndTimePeriod
+	abstract PeriodReport getCigarettesPerAndTimePeriod
 	(int yearFrom, int yearTo, int monthFrom, int monthTo, int dayFRom, int dayTo,
 			int hourFrom, int hourTo, int minutesFrom, int minutesTo, List<Integer> excludedDaysOfTheWeek);
 	
-	boolean setInitialData(InitialUserData userData);
+	abstract boolean setInitialData(InitialUserData userData);
 	
-	InitialUserData getInitialData();
+	abstract InitialUserData getInitialData();
 	
-	void removeActivity(int activityId);
+	abstract void removeActivity(int activityId);
 }

@@ -1,36 +1,22 @@
 package com.example.trackyoursmoking;
 
-import java.util.Date;
 import java.util.List;
 
-public class DefaultRepository implements IRepository {
+import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-	
-	
+public class DefaultRepository extends BaseRepository  {
 
-	public boolean setInitialData(InitialUserData userData) {
-		// TODO Auto-generated method stub
-		return false;
+	public DefaultRepository(Application aplication) {
+		super(aplication);
+		// TODO Auto-generated constructor stub
 	}
-
-	public InitialUserData getInitialData() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 
 	@Override
 	public int getCigarettesSmokedTodayCount() {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public List<SmokingActivity> takeCigarettesForGivenDay(int year, int month,
-			int day) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -46,9 +32,10 @@ public class DefaultRepository implements IRepository {
 	}
 
 	@Override
-	public void removeActivity(int activityId) {
+	public List<SmokingActivity> takeCigarettesForGivenDay(int year, int month,
+			int day) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
@@ -62,9 +49,60 @@ public class DefaultRepository implements IRepository {
 	public PeriodReport getCigarettesPerAndTimePeriod(int yearFrom, int yearTo,
 			int monthFrom, int monthTo, int dayFRom, int dayTo, int hourFrom,
 			int hourTo, int minutesFrom, int minutesTo,
-			List<Integer> includedDaysOfTheWeek) {
+			List<Integer> excludedDaysOfTheWeek) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public boolean setInitialData(InitialUserData userData) {
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.application);
+		SharedPreferences.Editor editor = sharedPrefs.edit();
+		
+		editor.putBoolean("has_initial_data", true);
+
+		editor.putInt("max_cigarettes_per_day", userData.getMaxCigarettensPerDay());
+		editor.putInt("min_cigarettes_per_day", userData.getMinCigarettensPerDay());
+		
+		if(userData.getMonthMoneyLimit() != null)
+        {
+                editor.putLong("month_money_limit", Double.doubleToLongBits((Double) userData.getMonthMoneyLimit()));
+        }
+        editor.putLong("price_per_cigarette", Double.doubleToLongBits((Double) userData.getPricePerCigarette()));
+		
+		editor.commit();
+		
+		return true;
+	}
+
+	@Override
+	public InitialUserData getInitialData() {
+		InitialUserData initialData = new InitialUserData();
+		
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.application);
+		
+		boolean hasInitialData = sharedPrefs.getBoolean("has_initial_data", false);
+		
+		if(hasInitialData){
+			
+				initialData.setMaxCigarettensPerDay(sharedPrefs.getInt("max_cigarettes_per_day", 0));
+				initialData.setMinCigarettensPerDay(sharedPrefs.getInt("min_cigarettes_per_day", 0));
+				initialData.setPricePerCigarette(Double.longBitsToDouble(sharedPrefs.getLong("price_per_cigarette", 5)));
+                Long moneyLimit = sharedPrefs.getLong("month_money_limit", -1);
+                if(moneyLimit != -1){
+                        initialData.setMonthMoneyLimit(Double.longBitsToDouble(moneyLimit));
+                }
+				return initialData;
+			}			
+		return null;
+	}
+
+	@Override
+	public void removeActivity(int activityId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 }

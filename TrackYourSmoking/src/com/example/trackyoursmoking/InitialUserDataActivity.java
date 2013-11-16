@@ -6,9 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -25,7 +23,7 @@ public class InitialUserDataActivity extends Activity {
 		private  IRepository repository;
 		
 		public InitialUserDataActivity(){
-			this.repository = new TestRepository();
+			this.repository = new TestRepository(getApplication());
 		}
 		
 		public InitialUserDataActivity(IRepository repository){
@@ -253,32 +251,10 @@ public class InitialUserDataActivity extends Activity {
 			
 			 else{
 				 Intent theIndent = new Intent(getApplication(), MainActivity.class);
-				 this.setInitialData(userSettings);
+				 this.repository.setInitialData(userSettings);
 				 startActivity(theIndent);
 				 
 			 }
 			 
-		}
-		
-		private void setInitialData(InitialUserData initialData) {
-
-					SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
-					SharedPreferences.Editor editor = sharedPrefs.edit();
-					
-					editor.putBoolean("has_initial_data", true);
-
-					editor.putInt("max_cigarettes_per_day", initialData.getMaxCigarettensPerDay());
-					editor.putInt("min_cigarettes_per_day", initialData.getMinCigarettensPerDay());
-					
-					if(initialData.getMonthMoneyLimit() != null)
-                    {
-                            editor.putLong("month_money_limit", Double.doubleToLongBits((Double) initialData.getMonthMoneyLimit()));
-                    }
-                    editor.putLong("price_per_cigarette", Double.doubleToLongBits((Double) initialData.getPricePerCigarette()));
-					
-					editor.commit();
-								
-				}
-		
-		
+		}	
 }

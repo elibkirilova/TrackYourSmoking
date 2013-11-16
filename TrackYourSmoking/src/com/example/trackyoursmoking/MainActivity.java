@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,7 +15,6 @@ import android.support.v4.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 
 import android.support.v4.app.FragmentActivity;
@@ -39,7 +37,7 @@ public class MainActivity extends FragmentActivity  {
  	private ProgressDialog ringProgressDialog;
 
 	public MainActivity(){
-		this.repository = new TestRepository();
+		this.repository = new TestRepository(getApplication());
 	}
 	
 	public MainActivity(IRepository repository){
@@ -55,7 +53,7 @@ public class MainActivity extends FragmentActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        InitialUserData userData = this.getInitialData();
+        InitialUserData userData = this.repository.getInitialData();
 
         if(userData == null){
         	 
@@ -248,28 +246,6 @@ public class MainActivity extends FragmentActivity  {
 	    	}
 		}
 
-		private InitialUserData getInitialData() {
-			
-			InitialUserData initialData = new InitialUserData();
-			
-			SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
-			
-			boolean hasInitialData = sharedPrefs.getBoolean("has_initial_data", false);
-			
-			if(hasInitialData){
-				
-					initialData.setMaxCigarettensPerDay(sharedPrefs.getInt("max_cigarettes_per_day", 0));
-					initialData.setMinCigarettensPerDay(sharedPrefs.getInt("min_cigarettes_per_day", 0));
-					initialData.setPricePerCigarette(Double.longBitsToDouble(sharedPrefs.getLong("price_per_cigarette", 5)));
-                    Long moneyLimit = sharedPrefs.getLong("month_money_limit", -1);
-                    if(moneyLimit != -1){
-                            initialData.setMonthMoneyLimit(Double.longBitsToDouble(moneyLimit));
-                    }
-					return initialData;
-				}			
-			return null;
-		}
-		
 		
 		@Override
 		public void onResume() {

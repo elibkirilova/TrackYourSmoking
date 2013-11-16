@@ -5,15 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -42,9 +41,7 @@ public class DailyReport extends Fragment  {
 	
 	private long loadedDate;
 	
-	public DailyReport(){
-		this.repository = new TestRepository();
-	}
+	
 	
 //	public DailyReportActivity(IRepository repository){
 //		this.repository = repository;
@@ -265,6 +262,12 @@ public class DailyReport extends Fragment  {
 		}
 		
 	};
+	
+	@Override
+	public void onAttach(Activity activity) {
+	    super.onAttach(activity);
+	    this.repository = new TestRepository(activity.getApplication());
+	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle savedInstanceState) {
