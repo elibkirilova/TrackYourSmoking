@@ -18,8 +18,7 @@
     
     <string name="add_cigarette">Another One</string>
     
-    <string name="pref_initial_settings">Cigarettes count levels</string>
-    
+   
     <string name="smoking_state">Smoking state image</string>
     
      <string name="smoking_activities_list_title">Time/price of smoking</string>
@@ -47,4 +46,14 @@
       
       <string name="switch_calendar_on">Hide calendar</string>
       <string name="switch_calendar_off">Show calendar</string>
+      
+     <string name="pref_initial_settings_category">Initial settings</string>
+     <string name="pref_initial_settings_summary">Change your initial settings</string>
+     
+     <string name="pref_hardware_category">Hardware settings</string>
+     <string name="pref_allow_vibration_title">Allow vibration</string>
+     <string name="pref_allow_vibration_summary">
+         Allow vibration upon certain events like adding cigarette, viewing reports, etc.
+     </string>
+     
 </resources>

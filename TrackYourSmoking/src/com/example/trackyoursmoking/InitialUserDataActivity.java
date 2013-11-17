@@ -23,7 +23,7 @@ public class InitialUserDataActivity extends Activity {
 		private  IRepository repository;
 		
 		public InitialUserDataActivity(){
-			this.repository = new TestRepository(getApplication());
+		
 		}
 		
 		public InitialUserDataActivity(IRepository repository){
@@ -60,7 +60,7 @@ public class InitialUserDataActivity extends Activity {
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.initial_settings);
-	        
+	    	this.repository = new DefaultRepository(getApplication());
 	        minCigPerDayTextView = (TextView) findViewById(R.id.minCigPerDayValue);
 	        maxCigPerDayTextView = (TextView) findViewById(R.id.maxCigPerDayValue);
 	        

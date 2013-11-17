@@ -1,7 +1,9 @@
 package com.example.trackyoursmoking;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,15 +15,14 @@ public class DBTools extends SQLiteOpenHelper {
 	
 	public DBTools(Context applicationContext){
 		
-		super(applicationContext, "contactbook.db", null, 1);
+		super(applicationContext, "trackyoursmoking.db", null, 1);
 		
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		
-		String query = "CREATE TABLE contacts ( contactId INTEGER PRIMARY KEY, firstName TEXT, " +
-		"lastName TEXT, phoneNumber TEXT, emailAddress TEXT, homeAddress TEXT)";
+		String query = "CREATE TABLE smokingActivities (smokingActivityId INTEGER PRIMARY KEY, activityDateAndTime INTEGER, cigarettePrice DECIMAL(10,2) )";
 		
 		database.execSQL(query);
 		
@@ -30,120 +31,77 @@ public class DBTools extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
 		
-		String query = "DROP TABLE IF EXISTS contacts";
+		String query = "DROP TABLE IF EXISTS smokingActivities";
 		
 		database.execSQL(query);
 		onCreate(database);
 		
 	}
 	
-	public void insertContact(HashMap<String, String> queryValues){
+	public SmokingActivity insertActivity(SmokingActivity activity){
 		
 		SQLiteDatabase database = this.getWritableDatabase();
-		
+
 		ContentValues values = new ContentValues();
-		
-		values.put("firstName", queryValues.get("firstName"));
-		values.put("lastName", queryValues.get("lastName"));
-		values.put("phoneNumber", queryValues.get("phoneNumber"));
-		values.put("emailAddress", queryValues.get("emailAddress"));
-		values.put("homeAddress", queryValues.get("homeAddress"));
-		
-		database.insert("contacts", null, values);
-		
-		database.close();
+		values.put("activityDateAndTime", activity.getDateAndTime().getTime());
+		values.put("cigarettePrice", activity.getCigarettePrice());
+	    long insertId = database.insert("smokingActivities", null,
+	        values);
+	    Cursor cursor = database.query("smokingActivities",
+	       new String[] {"smokingActivityId", "activityDateAndTime", "cigarettePrice"}, "smokingActivityId" + " = " + insertId, null,
+	        null, null, null);
+	    cursor.moveToFirst();
+	    
+	    SmokingActivity newActivity = cursorToSmokingActivity(cursor);
+	    
+	    cursor.close();
+	    database.close();
+
+		return newActivity;
 		
 	}
 	
-	public int updateContact(HashMap<String, String> queryValues){
-		
-		SQLiteDatabase database = this.getWritableDatabase();
-		
-		ContentValues values = new ContentValues();
-		
-		values.put("firstName", queryValues.get("firstName"));
-		values.put("lastName", queryValues.get("lastName"));
-		values.put("phoneNumber", queryValues.get("phoneNumber"));
-		values.put("emailAddress", queryValues.get("emailAddress"));
-		values.put("homeAddress", queryValues.get("homeAddress"));
-		
-		return database.update("contacts", values, 
-				"contactId" + " = ?", new String[] {queryValues.get("contactId") });
-		
-	}
 	
-	public void deleteContact(String id){
+	public void deleteActivity(int id){
 		
 		SQLiteDatabase database = this.getWritableDatabase();
 		
-		String deleteQuery = "DELETE FROM contacts WHERE contactId='" + id + "'";
+		String deleteQuery = "DELETE FROM smokingActivities WHERE smokingActivityId='" + id + "'";
 		
 		database.execSQL(deleteQuery);
 		
 	}
 	
-	public ArrayList<HashMap<String, String>> getAllContacts(){
-		
-		ArrayList<HashMap<String, String>> contactArrayList = new ArrayList<HashMap<String, String>>();
-		
-		String selectQuery = "SELECT * FROM contacts ORDER BY lastName";
+	 private SmokingActivity cursorToSmokingActivity(Cursor cursor) {
+			 SmokingActivity activity = new SmokingActivity();
+			 activity.setId((int)cursor.getLong(0));
+			 activity.setDateAndTime(new Date(cursor.getLong(1)));
+			 activity.setCigarettePrice(cursor.getFloat(2));
+			 
+			 return activity;
+		  }
+	
+	public List<SmokingActivity> getAllActivities(){
 		
 		SQLiteDatabase database = this.getWritableDatabase();
-		
-		Cursor cursor = database.rawQuery(selectQuery, null);
-		
-		if(cursor.moveToFirst()){
-			
-			do{
-				
-				HashMap<String, String> contactMap = new HashMap<String, String>();
-				
-				contactMap.put("contactId", cursor.getString(0));
-				contactMap.put("firstName", cursor.getString(1));
-				contactMap.put("lastName", cursor.getString(2));
-				contactMap.put("phoneNumber", cursor.getString(3));
-				contactMap.put("emailAddress", cursor.getString(4));
-				contactMap.put("homeAddress", cursor.getString(5));
-				
-				contactArrayList.add(contactMap);
-				
-			} while(cursor.moveToNext());
-			
-		}
-		
-		return contactArrayList;
-		
+		List<SmokingActivity> activities = new ArrayList<SmokingActivity>();
+
+	   Cursor cursor = database.query("smokingActivities",
+	 	       new String[] {"smokingActivityId", "activityDateAndTime", "cigarettePrice"}, 
+	 	      null, null, null, null, null);
+
+	    cursor.moveToFirst();
+	    while (!cursor.isAfterLast()) {
+	    	SmokingActivity activity = cursorToSmokingActivity(cursor);
+	    	activities.add(activity);
+	      cursor.moveToNext();
+	    }
+	    // make sure to close the cursor
+	    cursor.close();
+	    database.close();
+	    return activities;
 	}
 	
-	public HashMap<String, String> getContactInfo(String id){
-		
-		HashMap<String, String> contactMap = new HashMap<String, String>();
-		
-		SQLiteDatabase database = this.getReadableDatabase();
-		
-		String selectQuery = "SELECT * FROM contacts WHERE contactId='" + id + "'";
-		
-		Cursor cursor = database.rawQuery(selectQuery, null);
-		
-		if(cursor.moveToFirst()){
-			
-			do{
-				
-				contactMap.put("contactId", cursor.getString(0));
-				contactMap.put("firstName", cursor.getString(1));
-				contactMap.put("lastName", cursor.getString(2));
-				contactMap.put("phoneNumber", cursor.getString(3));
-				contactMap.put("emailAddress", cursor.getString(4));
-				contactMap.put("homeAddress", cursor.getString(5));
-
-				
-			} while(cursor.moveToNext());
-			
-		}
-		
-		return contactMap;
-		
-	}
 	
 }
 

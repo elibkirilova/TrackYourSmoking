@@ -1,5 +1,6 @@
 package com.example.trackyoursmoking;
 
+import java.util.Calendar;
 import java.util.List;
 
 import android.app.Application;
@@ -8,41 +9,46 @@ import android.preference.PreferenceManager;
 
 public class DefaultRepository extends BaseRepository  {
 
+	private DBTools database;
+	
 	public DefaultRepository(Application aplication) {
 		super(aplication);
-		// TODO Auto-generated constructor stub
+		database = new DBTools(aplication);
 	}
 
 	@Override
 	public int getCigarettesSmokedTodayCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.database.getAllActivities().size();
 	}
 
 	@Override
 	public List<SmokingActivity> getCigarettesSmokedToday() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.database.getAllActivities();
 	}
 
 	@Override
 	public SmokingActivity addCigaretteToday() {
-		// TODO Auto-generated method stub
-		return null;
+		SmokingActivity newActivity = new SmokingActivity();
+		newActivity.setCigarettePrice(this.getInitialData().getPricePerCigarette());
+		Calendar cal = Calendar.getInstance();
+		newActivity.setDateAndTime(cal.getTime());
+		return this.database.insertActivity(newActivity);
 	}
 
 	@Override
 	public List<SmokingActivity> takeCigarettesForGivenDay(int year, int month,
 			int day) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.database.getAllActivities();
 	}
 
 	@Override
 	public PeriodReport getCigarettesPerDatesPeriod(int yearFrom, int yearTo,
 			int monthFrom, int monthTo, int dayFrom, int dayTo) {
 		// TODO Auto-generated method stub
-		return null;
+		return new PeriodReport();
 	}
 
 	@Override
@@ -51,7 +57,7 @@ public class DefaultRepository extends BaseRepository  {
 			int hourTo, int minutesFrom, int minutesTo,
 			List<Integer> excludedDaysOfTheWeek) {
 		// TODO Auto-generated method stub
-		return null;
+		return new PeriodReport();
 	}
 
 	@Override
@@ -99,7 +105,7 @@ public class DefaultRepository extends BaseRepository  {
 
 	@Override
 	public void removeActivity(int activityId) {
-		// TODO Auto-generated method stub
+		this.database.deleteActivity(activityId);
 		
 	}
 

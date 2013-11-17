@@ -2,9 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content" >
  
-    <PreferenceCategory android:title="@string/pref_initial_settings" >
+    <PreferenceCategory android:title="@string/pref_initial_settings_category" >
        
-		<PreferenceScreen android:title="something">
+		<PreferenceScreen android:title="@string/pref_initial_settings_summary">
 		    <intent
 		        android:action="android.intent.action.USER_INITIAL_SETTINGS"
 		        android:targetPackage="com.example.trackyoursmoking"
@@ -13,12 +13,12 @@
 	</PreferenceScreen>
     </PreferenceCategory>
      
-    <PreferenceCategory android:title="@string/month_money_limit" >
+    <PreferenceCategory android:title="@string/pref_hardware_category" >
         <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="prefSendReport"
-            android:summary="@string/month_money_limit"
-            android:title="@string/month_money_limit" >
+            android:defaultValue="true"
+            android:key="allow_vibration"
+            android:summary="@string/pref_allow_vibration_summary"
+            android:title="@string/pref_allow_vibration_title" >
         </CheckBoxPreference>
     </PreferenceCategory>
  

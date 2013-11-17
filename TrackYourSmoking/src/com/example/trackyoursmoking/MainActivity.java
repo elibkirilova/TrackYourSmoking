@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,6 +17,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 
 import android.support.v4.app.FragmentActivity;
@@ -37,7 +40,7 @@ public class MainActivity extends FragmentActivity  {
  	private ProgressDialog ringProgressDialog;
 
 	public MainActivity(){
-		this.repository = new TestRepository(getApplication());
+		
 	}
 	
 	public MainActivity(IRepository repository){
@@ -52,7 +55,7 @@ public class MainActivity extends FragmentActivity  {
     	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+    	this.repository = new DefaultRepository(getApplication());
         InitialUserData userData = this.repository.getInitialData();
 
         if(userData == null){
@@ -211,6 +214,7 @@ public class MainActivity extends FragmentActivity  {
 		     	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		     	        public void onClick(DialogInterface dialog, int which) { 
 		     	           repository.addCigaretteToday();
+		     	          vibrate();
 		     	           updateScreen();
 		     	          isDialogOpen = false;
 		     	        }
@@ -231,6 +235,7 @@ public class MainActivity extends FragmentActivity  {
 	    			public void run() {
 	    					try {
 								Thread.sleep(3000);
+								vibrate();
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -247,8 +252,21 @@ public class MainActivity extends FragmentActivity  {
 		}
 
 		
+    	private void vibrate(){
+    		
+    		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
+    		
+    		boolean allowedVibration = sharedPrefs.getBoolean("allow_vibration", false);
+    		
+    		if(allowedVibration){
+	    			Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+	        		// Vibrate for 500 milliseconds
+	    			vibrator.vibrate(500);
+    			}			
+    	}
+    	
 		@Override
-		public void onResume() {
+ 		public void onResume() {
 		    super.onResume();
 		     updateScreen();
 		   

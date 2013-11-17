@@ -47,7 +47,7 @@ public class ReportForDatesPeriod extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 	    super.onAttach(activity);
-	    this.repository = new TestRepository(activity.getApplication());
+	    this.repository = new DefaultRepository(activity.getApplication());
 	}
 	
 	@Override

@@ -17,7 +17,7 @@ public class TestRepository extends BaseRepository {
 		// TODO Auto-generated constructor stub
 	}
 
-	private static InitialUserData initialData = new InitialUserData();
+	private static InitialUserData initialData;
 	
 	private static List<SmokingActivity> cigarettesSmoked = new ArrayList<SmokingActivity>();
 
