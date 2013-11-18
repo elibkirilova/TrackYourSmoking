@@ -86,7 +86,7 @@ public class PeriodReport {
 			    StringBuilder result = new StringBuilder();
 			    String NEW_LINE = System.getProperty("line.separator");
 			    
-			    DecimalFormat twoDForm = new DecimalFormat("#.##");
+			    DecimalFormat twoDForm = new DecimalFormat("0.00");
 			    
 			    result.append("Money spend: ");
 			    result.append(twoDForm.format(this.getMoneySpend()));

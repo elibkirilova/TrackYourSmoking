@@ -3,9 +3,9 @@
         android:oneshot="false">
 	    <item android:drawable="@drawable/under_minimum_smoke1" android:duration="100" />
 	    <item android:drawable="@drawable/under_minimum_smoke2" android:duration="50" />
-	    <item android:drawable="@drawable/under_minimum_smoke3" android:duration="100" />
-	    <item android:drawable="@drawable/under_minimum_smoke4" android:duration="50" />
-	    <item android:drawable="@drawable/under_minimum_smoke3" android:duration="100" />
+	    <item android:drawable="@drawable/under_minimum_smoke3" android:duration="50" />
+	    <item android:drawable="@drawable/under_minimum_smoke4" android:duration="100" />
+	    <item android:drawable="@drawable/under_minimum_smoke3" android:duration="50" />
 	    <item android:drawable="@drawable/under_minimum_smoke2" android:duration="50" />
 	    <item android:drawable="@drawable/under_minimum_smoke1" android:duration="100" />
 </animation-list>

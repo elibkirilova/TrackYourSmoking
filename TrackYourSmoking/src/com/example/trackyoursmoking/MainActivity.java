@@ -1,6 +1,7 @@
 package com.example.trackyoursmoking;
 
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -234,7 +235,7 @@ public class MainActivity extends FragmentActivity  {
 	    			@Override
 	    			public void run() {
 	    					try {
-								Thread.sleep(3000);
+								Thread.sleep(1000);
 								vibrate();
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
@@ -325,7 +326,7 @@ public class MainActivity extends FragmentActivity  {
 				}
 				else if(cigarettesCount > maximum){
 					status = SmokingStates.ABOVE_LIMIT_SMOKE_STATE;
-					img.setBackgroundResource(R.drawable.animation_under_minimum_smoking);
+					img.setBackgroundResource(R.drawable.animation_above_maximum_smoking);
 				}
 				else if(cigarettesCount < maximum){
 					status = SmokingStates.AVERAGE_SMOKE_STATE;
@@ -334,10 +335,13 @@ public class MainActivity extends FragmentActivity  {
 				
 				currentState = status;
 				
-				dataContainer.setText(String.format("%s-%s-%s ciggarette(s) %s.%s %s.%s Spent money %.2g%n", 
+				DecimalFormat twoDForm = new DecimalFormat("0.00");
+				
+				
+				dataContainer.setText(String.format("%s-%s-%s ciggarette(s) %s.%s %s.%s Spent money %s", 
 						selectedDay,  new DateFormatSymbols().getMonths()[selectedMonth], selectedYear,
 						cigarettesCount, System.getProperty("line.separator"),
-						status, System.getProperty("line.separator"), spendMoney));
+						status, System.getProperty("line.separator"),twoDForm.format(spendMoney)));
 				
 			}
 	

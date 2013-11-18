@@ -1,6 +1,7 @@
 package com.example.trackyoursmoking;
 
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -600,7 +601,12 @@ public class ReportForDateAndTimePeriod extends Fragment {
 			cal.set(year, month, day);
 			selectedDateFrom = cal.getTimeInMillis();
 			dateFromTextView.setText(
-					 String.format("%s-%s-%s", year, new DateFormatSymbols().getMonths()[month], day));
+					 String.format("%s%s%s%s%s",
+							 day,
+							 System.getProperty("line.separator"), 
+							 new DateFormatSymbols().getMonths()[month],
+							 System.getProperty("line.separator"),
+							 year));
 		}
 		
 		private void updateDateTo(int year, int month, int day){
@@ -609,7 +615,12 @@ public class ReportForDateAndTimePeriod extends Fragment {
 			cal.set(year, month, day);
 			selectedDateTo = cal.getTimeInMillis();
 			dateToTextView.setText(
-					 String.format("%s-%s-%s", year, new DateFormatSymbols().getMonths()[month], day));
+					 String.format("%s%s%s%s%s",
+							 day,
+							 System.getProperty("line.separator"), 
+							 new DateFormatSymbols().getMonths()[month],
+							 System.getProperty("line.separator"),
+							 year));
 		}
 		
 		private void updateTimeFrom(int hour, int minutes){
@@ -622,8 +633,10 @@ public class ReportForDateAndTimePeriod extends Fragment {
 				return;
 			}
 			selectedTimeFrom = cal.getTimeInMillis();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
+
 			timeFromTextView.setText(
-					 String.format("%s:%s", hour, minutes));
+					 String.format(dateFormat.format(cal.getTime())));
 		}
 		
 		private void updateTimeTo(int hour, int minutes){
@@ -637,8 +650,11 @@ public class ReportForDateAndTimePeriod extends Fragment {
 			
 				return;
 			}
+			
+			SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
+
 			timeToTextView.setText(
-					 String.format("%s:%s", hour, minutes));
+					 String.format(dateFormat.format(cal.getTime())));
 		}
 		
 		@Override

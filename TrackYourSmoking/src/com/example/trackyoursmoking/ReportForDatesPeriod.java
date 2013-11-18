@@ -352,7 +352,12 @@ private void openDateToDialog(Calendar clendar){
 			cal.set(year, month, day);
 			selectedDateFrom = cal.getTimeInMillis();
 			dateFromTextView.setText(
-					 String.format("%s-%s-%s", year, new DateFormatSymbols().getMonths()[month], day));
+					String.format("%s%s%s%s%s",
+							 day,
+							 System.getProperty("line.separator"), 
+							 new DateFormatSymbols().getMonths()[month],
+							 System.getProperty("line.separator"),
+							 year));
 		}
 		
 		private void updateDateTo(int year, int month, int day){
@@ -360,8 +365,14 @@ private void openDateToDialog(Calendar clendar){
 			Calendar cal = Calendar.getInstance();
 			cal.set(year, month, day);
 			selectedDateTo = cal.getTimeInMillis();
-			dateToTextView.setText(
-					 String.format("%s-%s-%s", year, new DateFormatSymbols().getMonths()[month], day));
+			
+					dateToTextView.setText(
+							 String.format("%s%s%s%s%s",
+									 day,
+									 System.getProperty("line.separator"), 
+									 new DateFormatSymbols().getMonths()[month],
+									 System.getProperty("line.separator"),
+									 year));
 		}
 		
 		@Override

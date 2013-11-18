@@ -105,18 +105,20 @@
         android:id="@+id/dateFromTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnsFromToDateLinearLayout"
+
         android:layout_alignLeft="@+id/btnsFromToDateLinearLayout"
         android:text="@string/set_date_hint"
+         android:layout_marginBottom="20dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/dateToTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        
         android:layout_alignRight="@+id/btnsFromToDateLinearLayout"
         android:text="@string/set_date_hint"
+         android:layout_marginBottom="20dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
    

@@ -97,9 +97,12 @@ public class InitialUserDataActivity extends Activity {
 	        		
 		        	pricePerCigaretteEditText.setText(Double.toString(initialData.getPricePerCigarette())); 
 	        	}
-	        	minCigPerDay = DEFAULT_MIN_CIG_PER_DAY;
-	        	maxCigPerDay = DEFAULT_MAX_CIG_PER_DAY;
-	        	
+	        	else{
+	        		minCigPerDay = DEFAULT_MIN_CIG_PER_DAY;
+		        	maxCigPerDay = DEFAULT_MAX_CIG_PER_DAY;
+		        	
+	        	}
+	        
 	    	}
 	        else{
 	        	minCigPerDay = savedInstanceState.getInt("CURRENT_MIN_CIG_PER_DAY");

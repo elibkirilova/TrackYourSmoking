@@ -14,6 +14,14 @@ public class SmokingActivity implements Comparable<SmokingActivity> {
 	private Date dateAndTime;
 	
 	
+	public SmokingActivity(){
+		
+	}
+	
+	public SmokingActivity(double cigarettePrice, Date dateAndTime){
+		this.setCigarettePrice(cigarettePrice);
+		this.setDateAndTime(dateAndTime);
+	}
 	
 	 public int getId() {
 	        return this.id;

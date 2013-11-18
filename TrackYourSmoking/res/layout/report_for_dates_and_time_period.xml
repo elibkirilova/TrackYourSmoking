@@ -49,17 +49,19 @@
             android:layout_alignParentTop="true"
 	        android:layout_alignParentLeft="true"
 	        android:layout_alignParentRight="true" 
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal"
+            />
     
     <TextView
         android:id="@+id/dateFromtextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/dateToTextView"
-        android:layout_alignBottom="@+id/dateToTextView"
+       
         android:layout_alignLeft="@+id/btnsFromToDateLinearLayout"
         android:layout_below="@+id/reportTextView"
-        
+        android:layout_marginBottom="20dp"
+        android:text="@string/set_date_hint"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <LinearLayout
@@ -93,9 +95,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/btnsFromToDateLinearLayout"
-        
-        android:layout_marginTop="15dp"
         android:layout_below="@+id/reportTextView"
+        android:layout_marginBottom="20dp"
+        android:text="@string/set_date_hint"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -105,6 +107,7 @@
         android:layout_alignLeft="@+id/dateFromtextView"
         android:layout_below="@+id/btnsFromToDateLinearLayout"
         android:layout_marginTop="17dp"
+        android:text="@string/set_time_hint"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -113,10 +116,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/timeFromTextView"
         android:layout_alignRight="@+id/dateToTextView"
+        android:text="@string/set_time_hint"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    
-    
     
      <LinearLayout
         android:id="@+id/linearLayout2"

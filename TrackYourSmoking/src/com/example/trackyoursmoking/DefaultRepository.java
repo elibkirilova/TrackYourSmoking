@@ -1,6 +1,7 @@
 package com.example.trackyoursmoking;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Application;
@@ -19,13 +20,22 @@ public class DefaultRepository extends BaseRepository  {
 	@Override
 	public int getCigarettesSmokedTodayCount() {
 		// TODO Auto-generated method stub
-		return this.database.getAllActivities().size();
+		return this.database.getAllActivities(null).size();
 	}
 
 	@Override
 	public List<SmokingActivity> getCigarettesSmokedToday() {
 		// TODO Auto-generated method stub
-		return this.database.getAllActivities();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		
+		int currentYear = cal.get(Calendar.YEAR);
+
+		int currentMonth = cal.get(Calendar.MONTH);
+		
+		int currentDay = cal.get(Calendar.DATE);
+		
+		return this.takeCigarettesForGivenDay(currentYear, currentMonth, currentDay);
 	}
 
 	@Override
@@ -41,7 +51,8 @@ public class DefaultRepository extends BaseRepository  {
 	public List<SmokingActivity> takeCigarettesForGivenDay(int year, int month,
 			int day) {
 		// TODO Auto-generated method stub
-		return this.database.getAllActivities();
+		return this.database.getAllActivitiesByDay(year,month,
+				day);
 	}
 
 	@Override

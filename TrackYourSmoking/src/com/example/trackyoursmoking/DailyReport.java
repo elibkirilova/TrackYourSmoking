@@ -1,6 +1,7 @@
 package com.example.trackyoursmoking;
 
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -180,7 +181,8 @@ public class DailyReport extends Fragment  {
 		
 		TextView currentActivityPriceTextView = (TextView) currentActivityRow.findViewById(R.id.activityPriceTextView);
 
-		currentActivityPriceTextView.setText(Double.toString(activity.getCigarettePrice()));
+		DecimalFormat twoDForm = new DecimalFormat("0.00");
+		currentActivityPriceTextView.setText(twoDForm.format(activity.getCigarettePrice()));
 		
 		TextView activityIdTextView = (TextView) currentActivityRow.findViewById(R.id.activityIdTextView);
 		
@@ -221,11 +223,11 @@ public class DailyReport extends Fragment  {
 			else if(cigarettesCount < maximum){
 				status = SmokingStates.AVERAGE_SMOKE_STATE;
 			}
-			
-			dataContainer.setText(String.format("%s-%s-%s ciggarette(s) %s.%s %s.%s Spent money %.2g%n", 
+			DecimalFormat twoDForm = new DecimalFormat("0.00");
+			dataContainer.setText(String.format("%s-%s-%s ciggarette(s) %s.%s %s.%s Spent money %s", 
 					selectedDay, new DateFormatSymbols().getMonths()[selectedMonth], selectedYear,
 					cigarettesCount, System.getProperty("line.separator"),
-					status, System.getProperty("line.separator"), spendMoney));
+					status, System.getProperty("line.separator"), twoDForm.format(spendMoney)));
 			
 		}
 	
