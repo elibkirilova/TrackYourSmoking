@@ -175,7 +175,7 @@ public class DailyReport extends Fragment  {
 
 		TextView currentActivityTimeTextView = (TextView) currentActivityRow.findViewById(R.id.activityTimeTextView);
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", java.util.Locale.getDefault());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss", java.util.Locale.getDefault());
 
 		currentActivityTimeTextView.setText(dateFormat.format(activity.getDateAndTime()));
 		

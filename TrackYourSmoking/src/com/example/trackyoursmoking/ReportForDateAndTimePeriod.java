@@ -334,10 +334,9 @@ public class ReportForDateAndTimePeriod extends Fragment {
     	StringBuilder excludedDays = new StringBuilder();
     	
     	 for(int i = 0; i < checkedDays.length; i++){
-			  if(checkedDays[i]){
+			  if(!checkedDays[i]){
 				  passesDaysValuesDependingOnCalendar.add(i + 1);
-			  }
-			  else{
+			  
 				  excludedDays.append(this.daysOfTheWeek[i]);
 				  excludedDays.append(" ;");
 			  }
@@ -382,7 +381,7 @@ public class ReportForDateAndTimePeriod extends Fragment {
 		
 		
 
-		reportTextView.setText(String.format("%s-%s-%s to %s-%s-%s between %s-%s and %s-%s %s %s %s %s %s Excluded days: %s", 
+		reportTextView.setText(String.format("%s-%s-%s to %s-%s-%s between %s:%s and %s:%s %s %s %s %s %s Excluded days: %s", 
 				dayFrom,  new DateFormatSymbols().getMonths()[monthFrom], yearFrom,
 				dayTo,  new DateFormatSymbols().getMonths()[monthTo], yearTo,
 				hourFrom, minutesFrom,

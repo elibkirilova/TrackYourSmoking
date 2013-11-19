@@ -4,24 +4,25 @@ import java.util.List;
 
 public interface IRepository {
 
-	abstract int getCigarettesSmokedTodayCount();
+
+	List<SmokingActivity> getCigarettesSmokedToday();
+	 SmokingActivity addCigaretteToday();
 	
-	abstract List<SmokingActivity> getCigarettesSmokedToday();
+	 List<SmokingActivity> takeCigarettesForGivenDay(int year, int month, int day);
 	
-	abstract SmokingActivity addCigaretteToday();
-	
-	abstract List<SmokingActivity> takeCigarettesForGivenDay(int year, int month, int day);
-	
-	abstract PeriodReport getCigarettesPerDatesPeriod
+	 PeriodReport getCigarettesPerDatesPeriod
 	(int yearFrom, int yearTo, int monthFrom, int monthTo, int dayFrom, int dayTo);
 	
-	abstract PeriodReport getCigarettesPerAndTimePeriod
+	 PeriodReport getCigarettesPerAndTimePeriod
 	(int yearFrom, int yearTo, int monthFrom, int monthTo, int dayFRom, int dayTo,
 			int hourFrom, int hourTo, int minutesFrom, int minutesTo, List<Integer> excludedDaysOfTheWeek);
 	
-	abstract boolean setInitialData(InitialUserData userData);
+	 boolean setInitialData(InitialUserData userData);
 	
-	abstract InitialUserData getInitialData();
+	 InitialUserData getInitialData();
 	
-	abstract void removeActivity(int activityId);
+	 void removeActivity(int activityId);
+	
+	 PeriodReport getReportByDay(int year, int month, int day );
+	boolean isMonthLimitReached();
 }

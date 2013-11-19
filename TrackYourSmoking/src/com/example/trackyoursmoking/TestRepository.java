@@ -83,11 +83,7 @@ public class TestRepository extends BaseRepository {
 		return list;
 	}
 
-	@Override
-	public int getCigarettesSmokedTodayCount() {
-		List<SmokingActivity> result = this.getCigarettesSmokedToday();
-		return result.size();
-	}
+	
 
 	@Override
 	public void removeActivity(int activityId) {
@@ -326,5 +322,17 @@ public class TestRepository extends BaseRepository {
 		}
 		
 		return countOfDays;
+	}
+
+	@Override
+	public PeriodReport getReportByDay(int year, int month, int day) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isMonthLimitReached() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

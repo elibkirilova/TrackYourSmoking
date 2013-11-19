@@ -26,7 +26,7 @@ public class PeriodReport {
 	    		throw new InvalidParameterException("The 'cigarettesCount' should be a positive number.");
 	    	}
 	    	
-	        this.minCigarettensPerDay = cigarettesCount;
+	        this.cigarettesCount = cigarettesCount;
 	    }
 	
 	 public int getMinCigarettensPerDay() {
@@ -88,6 +88,9 @@ public class PeriodReport {
 			    
 			    DecimalFormat twoDForm = new DecimalFormat("0.00");
 			    
+			    result.append("Cigarrettes smoked: ");
+			    result.append(this.getCigarettesCount());
+			    result.append(NEW_LINE);
 			    result.append("Money spend: ");
 			    result.append(twoDForm.format(this.getMoneySpend()));
 			    result.append(NEW_LINE);
@@ -97,7 +100,6 @@ public class PeriodReport {
 			    result.append("Max cig per day: ");
 			    result.append(this.getMaxCigarettensPerDay());
 			    result.append(NEW_LINE);
-			    
 			    result.append("Averrage count of cigarettes per day: ");
 			    result.append(twoDForm.format(this.getAverrageCigarettesPerDay()));
 			    result.append(NEW_LINE);

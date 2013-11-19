@@ -13,11 +13,7 @@ public abstract class BaseRepository implements IRepository {
 	}
 	
 	@Override
-	public abstract int getCigarettesSmokedTodayCount();
-
-	@Override
-	public abstract List<SmokingActivity> getCigarettesSmokedToday();
-
+	public abstract boolean isMonthLimitReached();
 	@Override
 	public abstract SmokingActivity addCigaretteToday();
 
@@ -43,5 +39,8 @@ public abstract class BaseRepository implements IRepository {
 
 	@Override
 	public abstract void removeActivity(int activityId);
+	
+	@Override
+	public abstract PeriodReport getReportByDay(int year, int month, int day );
 
 }

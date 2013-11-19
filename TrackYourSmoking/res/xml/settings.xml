@@ -20,6 +20,23 @@
             android:summary="@string/pref_allow_vibration_summary"
             android:title="@string/pref_allow_vibration_title" >
         </CheckBoxPreference>
+        
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="allow_sound_effects"
+            android:summary="@string/pref_allow_sound_effects_summary"
+            android:title="@string/pref_allow_sound_effects_title" >
+        </CheckBoxPreference>
     </PreferenceCategory>
  
+    
+    <PreferenceCategory android:title="@string/pref_notifications_category" >
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="allow_hangout_notification"
+            android:summary="@string/pref_hangout_notification_summary"
+            android:title="@string/pref_hangout_notification_title" >
+        </CheckBoxPreference>
+    </PreferenceCategory>
 </PreferenceScreen>

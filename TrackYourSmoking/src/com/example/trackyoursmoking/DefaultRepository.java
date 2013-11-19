@@ -17,15 +17,33 @@ public class DefaultRepository extends BaseRepository  {
 		database = new DBTools(aplication);
 	}
 
-	@Override
-	public int getCigarettesSmokedTodayCount() {
-		// TODO Auto-generated method stub
-		return this.database.getAllActivities(null).size();
-	}
+	
+    public boolean isMonthLimitReached(){
+    	
+    	Calendar calendar = Calendar.getInstance();
+
+    	InitialUserData data= this.getInitialData();
+    	if(data != null){
+    		
+    		if(data.getMonthMoneyLimit() != null)
+    		{
+    			PeriodReport report = this.getCigarettesPerDatesPeriod(
+        			calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR),
+        			calendar.get(Calendar.MONTH), calendar.get(Calendar.MONTH), 
+        			1, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+    			
+    			if(data.getMonthMoneyLimit() < report.getMoneySpend()){
+    				return true;
+    			}
+    		}
+    	}
+    	return false;
+    }
+	
 
 	@Override
 	public List<SmokingActivity> getCigarettesSmokedToday() {
-		// TODO Auto-generated method stub
+		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		
@@ -50,25 +68,31 @@ public class DefaultRepository extends BaseRepository  {
 	@Override
 	public List<SmokingActivity> takeCigarettesForGivenDay(int year, int month,
 			int day) {
-		// TODO Auto-generated method stub
+		
 		return this.database.getAllActivitiesByDay(year,month,
 				day);
 	}
-
+	
 	@Override
 	public PeriodReport getCigarettesPerDatesPeriod(int yearFrom, int yearTo,
 			int monthFrom, int monthTo, int dayFrom, int dayTo) {
-		// TODO Auto-generated method stub
-		return new PeriodReport();
+		
+		return this.database.getReportByDatesPeriod(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo);
 	}
 
 	@Override
+	public PeriodReport getReportByDay(int year, int month, int day ) {
+		
+		return this.database.getReportByDay(year,month, day);
+	}
+	
+	@Override
 	public PeriodReport getCigarettesPerAndTimePeriod(int yearFrom, int yearTo,
-			int monthFrom, int monthTo, int dayFRom, int dayTo, int hourFrom,
+			int monthFrom, int monthTo, int dayFrom, int dayTo, int hourFrom,
 			int hourTo, int minutesFrom, int minutesTo,
 			List<Integer> excludedDaysOfTheWeek) {
-		// TODO Auto-generated method stub
-		return new PeriodReport();
+		
+		return this.database.getReportByDatesAndTimePeriod(yearFrom, yearTo, monthFrom, monthTo, dayFrom, dayTo, hourFrom, hourTo, minutesFrom, minutesTo, excludedDaysOfTheWeek);
 	}
 
 	@Override
@@ -119,6 +143,9 @@ public class DefaultRepository extends BaseRepository  {
 		this.database.deleteActivity(activityId);
 		
 	}
+
+
+
 
 	
 

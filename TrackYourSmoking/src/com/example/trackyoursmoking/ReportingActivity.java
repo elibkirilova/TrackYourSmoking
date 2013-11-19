@@ -3,12 +3,17 @@ package com.example.trackyoursmoking;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabWidget;
 
 public class ReportingActivity extends FragmentActivity {
@@ -23,6 +28,13 @@ public class ReportingActivity extends FragmentActivity {
         mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
       
+        mTabHost.setOnTabChangedListener(new OnTabChangeListener() {
+
+            public void onTabChanged(String str) {
+            	vibrate();
+            }
+        });
+        
         Calendar calendar = Calendar.getInstance();
         
         Bundle dataTodayTab = new Bundle();
@@ -59,11 +71,11 @@ public class ReportingActivity extends FragmentActivity {
                 		  getResources().getDrawable(R.drawable.reporting_icon)),
                           DailyReport.class, null);
         mTabHost.addTab(
-                mTabHost.newTabSpec("tab5").setIndicator("for specified period",
+                mTabHost.newTabSpec("tab5").setIndicator("for specific period",
                 		  getResources().getDrawable(R.drawable.reporting_icon)),
                 		  ReportForDatesPeriod.class, null);
         mTabHost.addTab(
-                mTabHost.newTabSpec("tab6").setIndicator("for specified days and time period",
+                mTabHost.newTabSpec("tab6").setIndicator("for specific period extended",
                 		  getResources().getDrawable(R.drawable.reporting_icon)),
                 		  ReportForDateAndTimePeriod.class, null);
         
@@ -79,5 +91,18 @@ public class ReportingActivity extends FragmentActivity {
         hs.setHorizontalScrollBarEnabled(false);
     }
     
+    
+    private void vibrate(){
+		
+		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
+		
+		boolean allowedVibration = sharedPrefs.getBoolean("allow_vibration", false);
+		
+		if(allowedVibration){
+    			Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        		// Vibrate for 500 milliseconds
+    			vibrator.vibrate(100);
+			}			
+	}
   
 }

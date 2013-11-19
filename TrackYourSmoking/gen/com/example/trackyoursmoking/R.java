@@ -288,12 +288,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int min_cigarettens_per_day_text_view=0x7f080004;
         public static final int month_money_limit=0x7f080007;
         public static final int pick_date_btn=0x7f080015;
+        public static final int pref_allow_sound_effects_summary=0x7f080023;
+        public static final int pref_allow_sound_effects_title=0x7f080022;
         public static final int pref_allow_vibration_summary=0x7f080021;
         public static final int pref_allow_vibration_title=0x7f080020;
+        public static final int pref_hangout_notification_summary=0x7f080026;
+        public static final int pref_hangout_notification_title=0x7f080025;
         public static final int pref_hardware_category=0x7f08001f;
         public static final int pref_initial_settings_category=0x7f08001d;
         public static final int pref_initial_settings_summary=0x7f08001e;
         public static final int pref_month_money_limit_summary=0x7f080008;
+        public static final int pref_notifications_category=0x7f080024;
         public static final int price_of_smoking_col_title=0x7f080017;
         public static final int price_per_cigarette=0x7f080006;
         public static final int save_settings=0x7f080009;

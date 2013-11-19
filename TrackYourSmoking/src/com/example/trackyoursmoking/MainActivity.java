@@ -1,10 +1,13 @@
 package com.example.trackyoursmoking;
 
+import java.io.IOException;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -39,6 +42,7 @@ public class MainActivity extends FragmentActivity  {
  	
  	private boolean isDialogOpen;
  	private ProgressDialog ringProgressDialog;
+ 	private MediaPlayer mp;
 
 	public MainActivity(){
 		
@@ -65,6 +69,7 @@ public class MainActivity extends FragmentActivity  {
     		 return;
         }
 
+        stuckHangoutNotification();
         int display_mode = getResources().getConfiguration().orientation;
 
         if (display_mode == 1) {
@@ -87,46 +92,6 @@ public class MainActivity extends FragmentActivity  {
 
         updateScreen();
       
-//        Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
-//        NotificationCompat.Builder mBuilder =
-//        	    new NotificationCompat.Builder(this)
-//       	    .setSmallIcon(R.drawable.ic_launcher)
-//       	    .setContentTitle("Above your daily limit")
-//       	    .setContentText("with 5 cigarettes.")
-//        	    .setAutoCancel(true).setSound (Uri.parse("android.resource://"
-//        	            + getApplicationContext().getPackageName() + "/" + R.raw.funeral_march));
-//       
-////        Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
-//
-//     // The stack builder object will contain an artificial back stack for the
-//     // started Activity.
-//     // This ensures that navigating backward from the Activity leads out of
-//     // your application to the Home screen.
-//  TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-////     // Adds the back stack for the Intent (but not the Intent itself)
-//    stackBuilder.addParentStack(InitialUserDataActivity.class);
-////     // Adds the Intent that starts the Activity to the top of the stack
-//    stackBuilder.addNextIntent(resultIntent);
-//    PendingIntent resultPendingIntent =
-//            stackBuilder.getPendingIntent(
-//                0,
-//                PendingIntent.FLAG_UPDATE_CURRENT
-//            );
-//     mBuilder.setContentIntent(resultPendingIntent);
-//     NotificationManager mNotificationManager =
-//         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//     // mId allows you to update the notification later on.
-//     mNotificationManager.notify(12345, mBuilder.build());
-       
-        
-        
-
-       
-        //dailyDataTextView.setText(userData.toString());
-
-        //TextView initialDataTextView = (TextView)findViewById(R.id.initialDataTextView);
-        //initialDataTextView.setText(userData.toString());
-      
     }
 	
 	
@@ -137,40 +102,7 @@ public class MainActivity extends FragmentActivity  {
        // return true;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
-        
-        
-      NotificationCompat.Builder mBuilder =
-	    new NotificationCompat.Builder(this)
-	    .setSmallIcon(R.drawable.ic_launcher)
-	    .setContentTitle("I'm just hangin'")
-	    .setContentText("this app settings -> allow hangin")
-	    .setAutoCancel(false);
-
-		Intent resultIntent = new Intent(this, InitialUserDataActivity.class);
-		
-		
-		
-		// The stack builder object will contain an artificial back stack for the
-		// started Activity.
-		// This ensures that navigating backward from the Activity leads out of
-		// your application to the Home screen.
-		 TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-		// Adds the back stack for the Intent (but not the Intent itself)
-		  stackBuilder.addParentStack(InitialUserDataActivity.class);
-		// Adds the Intent that starts the Activity to the top of the stack
-		  stackBuilder.addNextIntent(resultIntent);
-		  PendingIntent resultPendingIntent =
-		        stackBuilder.getPendingIntent(
-		           0,
-		         PendingIntent.FLAG_UPDATE_CURRENT
-		     );
-		 mBuilder.setContentIntent(resultPendingIntent);
-		 NotificationManager mNotificationManager =
-		 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		// mId allows you to update the notification later on.
-		  mNotificationManager.notify(12, mBuilder.build());
-			
-			        
+             
 	        return true;
 	    }
     
@@ -266,11 +198,100 @@ public class MainActivity extends FragmentActivity  {
     			}			
     	}
     	
+    	
+    	private void playAboveLimitMarch(){
+    		
+    		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
+    		
+    		boolean allowedSounEffects = sharedPrefs.getBoolean("allow_sound_effects", false);
+    		
+    		if(allowedSounEffects){
+    			if(mp != null && mp.isPlaying()){
+    				return;
+    			}
+    			mp = new MediaPlayer();
+        		try {
+    				mp.setDataSource(getApplication(), Uri.parse("android.resource://"
+    				    + getApplicationContext().getPackageName() + "/" + R.raw.funeral_march));
+    			} catch (IllegalArgumentException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			} catch (SecurityException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			} catch (IllegalStateException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			} catch (IOException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+        		
+        		mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        			  public void onPrepared(MediaPlayer mp) {
+        			      mp.start();
+        			  }
+        			});
+        		mp.prepareAsync();
+        		mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+					
+					@Override
+					public void onCompletion(MediaPlayer mp) {
+						mp.release();
+						
+					 }
+    			});
+    		}
+    		
+    	}
+    	
+    	private void stuckHangoutNotification(){
+    		
+    		SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
+    		
+    		boolean allowedHangout = sharedPrefs.getBoolean("allow_hangout_notification", false);
+    		 NotificationManager mNotificationManager =
+					 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    		if(allowedHangout){
+    			
+    			NotificationCompat.Builder mBuilder =
+    				    new NotificationCompat.Builder(this)
+    				    .setSmallIcon(R.drawable.ic_launcher)
+    				    .setContentTitle("I'm just hangin'")
+    				    .setContentText("this app settings -> allow hangin")
+    				    .setAutoCancel(false);
+
+    					Intent resultIntent = new Intent(this, MainActivity.class);
+
+    					// The stack builder object will contain an artificial back stack for the
+    					// started Activity.
+    					// This ensures that navigating backward from the Activity leads out of
+    					// your application to the Home screen.
+    					 TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+    					// Adds the back stack for the Intent (but not the Intent itself)
+    					  stackBuilder.addParentStack(InitialUserDataActivity.class);
+    					// Adds the Intent that starts the Activity to the top of the stack
+    					  stackBuilder.addNextIntent(resultIntent);
+    					  PendingIntent resultPendingIntent =
+    					        stackBuilder.getPendingIntent(
+    					           0,
+    					         PendingIntent.FLAG_UPDATE_CURRENT
+    					     );
+    					 mBuilder.setContentIntent(resultPendingIntent);
+    					
+    					// mId allows you to update the notification later on.
+    					  mNotificationManager.notify(12, mBuilder.build());
+    		}
+    		else{
+    		 mNotificationManager.cancel(12);
+    		}
+    	}
+    	
 		@Override
  		public void onResume() {
 		    super.onResume();
 		     updateScreen();
-		   
+		     stuckHangoutNotification();
 		}
 		
 		private void updateScreen(){
@@ -281,18 +302,9 @@ public class MainActivity extends FragmentActivity  {
 			int mMonth = c.get(Calendar.MONTH);
 			int mDay = c.get(Calendar.DAY_OF_MONTH);
 			
-			List<SmokingActivity> smokedCigarettes = this.repository.takeCigarettesForGivenDay(mYear, mMonth, mDay);
+			PeriodReport smokedCigarettesReport = this.repository.getReportByDay(mYear, mMonth, mDay);
 			
-			int activitiesCount = smokedCigarettes.size();
-			
-			double spendMoney = 0;
-
-			for(int i = 0; i < activitiesCount; ++i){
-				
-				spendMoney += smokedCigarettes.get(i).getCigarettePrice();
-			}
-			
-			loadSmokingData(mYear, mMonth, mDay, activitiesCount, spendMoney);
+			loadSmokingData(mYear, mMonth, mDay, smokedCigarettesReport.getCigarettesCount(), smokedCigarettesReport.getMoneySpend());
 			frameAnimation = (AnimationDrawable) img.getBackground();
 	        frameAnimation.start();
 		}	
@@ -326,6 +338,7 @@ public class MainActivity extends FragmentActivity  {
 				}
 				else if(cigarettesCount > maximum){
 					status = SmokingStates.ABOVE_LIMIT_SMOKE_STATE;
+					playAboveLimitMarch();
 					img.setBackgroundResource(R.drawable.animation_above_maximum_smoking);
 				}
 				else if(cigarettesCount < maximum){
@@ -337,8 +350,14 @@ public class MainActivity extends FragmentActivity  {
 				
 				DecimalFormat twoDForm = new DecimalFormat("0.00");
 				
+				String moneyLimitMsgg = "";
+				boolean isLimitReachedThisMonth  = this.repository.isMonthLimitReached();
+				if(isLimitReachedThisMonth){
+					moneyLimitMsgg = "MONEY LIMIT REACHED"+ System.getProperty("line.separator");
+				}
 				
-				dataContainer.setText(String.format("%s-%s-%s ciggarette(s) %s.%s %s.%s Spent money %s", 
+				dataContainer.setText(String.format("%s %s-%s-%s ciggarette(s) %s.%s %s.%s Spent money %s",
+						moneyLimitMsgg,
 						selectedDay,  new DateFormatSymbols().getMonths()[selectedMonth], selectedYear,
 						cigarettesCount, System.getProperty("line.separator"),
 						status, System.getProperty("line.separator"),twoDForm.format(spendMoney)));
